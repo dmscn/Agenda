@@ -1,0 +1,41 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        style="@style/Fill_Parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            style="@style/ContainerFull.Vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo"
+                android:paddingBottom="20dp"
+                android:id="@+id/imgLogo"/>
+
+            <EditText
+                style="@style/EditText.Light.Text"
+                android:hint="@string/hint_username"
+                android:drawableLeft="@drawable/ic_user_light"
+                android:drawablePadding="10dp"
+                android:id="@+id/edUsername"/>
+
+            <EditText
+                style="@style/EditText.Light.Password"
+                android:hint="@string/hint_password"
+                android:drawableLeft="@drawable/ic_lock_light"
+                android:drawablePadding="10dp"
+                android:id="@+id/edPassword"/>
+
+            <Button
+                style="@style/Button.Bordered"
+                android:text="@string/str_login"
+                android:id="@+id/btnLogin"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</FrameLayout>

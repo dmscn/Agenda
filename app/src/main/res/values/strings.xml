@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Agenda</string>
+
+    <string name="txt_username">Username: </string>
+    <string name="txt_password">Password: </string>
+    <string name="txt_confirm_password">Confirm Password: </string>
+    <string name="txt_name">Full Name: </string>
+    <string name="txt_phone">Phone: </string>
+    <string name="txt_email">Email: </string>
+
+    <string name="msg_default_error">Unexpected Error</string>
+    <string name="msg_error_password_min_lenght">The password must contain at least 6 characters</string>
+    <string name="msg_error_email_format">Invalid Email Format</string>
+    <string name="msg_error_getting_web_service_response">Error when trying to get a response from the server</string>
+
+
+    <string name="hint_username">Username</string>
+    <string name="hint_password">Password</string>
+
+    <string name="str_login">Login</string>
+    <string name="str_register">Register</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

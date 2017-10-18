@@ -1,0 +1,33 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        style="@style/Fill_Parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            style="@style/ContainerFull.Vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo_with_brand"
+                android:paddingBottom="20dp"
+                android:id="@+id/imgLogo"/>
+
+            <Button
+                style="@style/Button.Bordered"
+                android:text="@string/str_login"
+                android:id="@+id/btnCallLogin"/>
+
+            <Button
+                style="@style/Button.Bordered"
+                android:layout_marginTop="10dp"
+                android:text="@string/str_register"
+                android:id="@+id/btnCallRegister"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</FrameLayout>

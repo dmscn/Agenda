@@ -1,0 +1,109 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+    </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+        <item name="android:windowBackground">@drawable/background</item>
+    </style>
+
+    <!-- Width & Height -->
+
+    <style name="Fill_Parent">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
+    <style name="Fill_Line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+    <style name="Wrap_Content">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+    </style>
+
+
+    <!-- Containers -->
+
+    <style name="ContainerFull.Vertical" parent="Fill_Parent">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="ContainerFull.Horizontal" parent="Fill_Parent">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <style name="ContainerLine.Vertical" parent="Fill_Line">
+        <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="ContainerLine.Horizontal" parent="Fill_Line">
+        <item name="android:orientation">horizontal</item>
+    </style>
+
+    <!-- Views -->
+
+    <!-- Text Views -->
+    <style name="Text.Light" parent="Fill_Line">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+
+    <style name="Text.Light.Form">
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:paddingLeft">5dp</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <!-- EditText -->
+    <style name="EditText.Light" parent="Fill_Line">
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:layout_marginRight">20dp</item>
+        <item name="android:backgroundTint">@color/colorPrimary</item>
+        <item name="android:textColorHint">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+
+    <style name="EditText.Light.Text">
+        <item name="android:inputType">text</item>
+    </style>
+
+    <style name="EditText.Light.Password">
+        <item name="android:inputType">textPassword</item>
+        <item name="android:fontFamily">sans-serif</item>
+    </style>
+
+    <style name="EditText.Light.Email">
+        <item name="android:inputType">textEmailAddress</item>
+    </style>
+
+    <style name="EditText.Light.Number">
+        <item name="android:inputType">number</item>
+    </style>
+
+    <!-- Button -->
+    <style name="Button.Bordered" parent="Fill_Line">
+        <item name="android:background">@drawable/button_shape_transparent</item>
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_marginTop">15dp</item>
+        <item name="android:padding">20dp</item>
+    </style>
+
+    <!-- ImageView -->
+
+</resources>

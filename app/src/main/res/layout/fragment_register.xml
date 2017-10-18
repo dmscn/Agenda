@@ -1,0 +1,79 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        style="@style/Fill_Parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            style="@style/ContainerFull.Vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/logo"
+                android:layout_marginBottom="10dp"/>
+
+            <!-- Name -->
+            <LinearLayout style="@style/ContainerLine.Vertical">
+
+                <TextView
+                    style="@style/Text.Light.Form"
+                    android:text="@string/txt_name"/>
+
+                <EditText
+                    style="@style/EditText.Light.Text"
+                    android:id="@+id/edNome"/>
+
+            </LinearLayout>
+
+            <!-- Email -->
+            <LinearLayout style="@style/ContainerLine.Vertical">
+
+                <TextView
+                    style="@style/Text.Light.Form"
+                    android:text="@string/txt_email"/>
+
+                <EditText
+                    style="@style/EditText.Light.Email"
+                    android:id="@+id/edEmail"/>
+
+            </LinearLayout>
+
+            <!-- Phone -->
+            <LinearLayout style="@style/ContainerLine.Vertical">
+
+                <TextView
+                    style="@style/Text.Light.Form"
+                    android:text="@string/txt_phone"/>
+
+                <EditText
+                    style="@style/EditText.Light.Number"
+                    android:id="@+id/edPhone"/>
+
+            </LinearLayout>
+
+            <!-- Password -->
+            <LinearLayout style="@style/ContainerLine.Vertical">
+
+                <TextView
+                    style="@style/Text.Light.Form"
+                    android:text="@string/txt_password"/>
+
+                <EditText
+                    style="@style/EditText.Light.Password"
+                    android:id="@+id/edPassword"/>
+
+            </LinearLayout>
+
+            <Button
+                style="@style/Button.Bordered"
+                android:text="@string/str_register"
+                android:id="@+id/btnRegister"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+</FrameLayout>
+
