@@ -17,6 +17,7 @@ import br.com.damasceno.agenda.activity.R;
 import br.com.damasceno.agenda.activity.WelcomeActivity;
 import br.com.damasceno.agenda.constant.Constants;
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class WelcomeFragment extends Fragment implements Constants {
@@ -24,7 +25,7 @@ public class WelcomeFragment extends Fragment implements Constants {
     private Activity activity;
 
     @BindView(R.id.btnCallLogin) Button btnCallLogin;
-    @BindView(R.id.btnCallLogin) Button btnCallRegister;
+    @BindView(R.id.btnCallRegister) Button btnCallRegister;
 
     public WelcomeFragment() {
         // Required empty public constructor
@@ -44,8 +45,9 @@ public class WelcomeFragment extends Fragment implements Constants {
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
-
         View view = inflater.inflate(R.layout.fragment_welcome, container, false);
+
+        ButterKnife.bind(this, view);
 
         return view;
     }

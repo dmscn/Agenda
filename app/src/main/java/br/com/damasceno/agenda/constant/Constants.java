@@ -5,15 +5,23 @@ package br.com.damasceno.agenda.constant;
  */
 
 public interface Constants {
+    public static final String TAG_LOG = "TAG_AGENDA";
     public static final String TAG_FRAG_WELCOME = "FRAG_WELCOME";
     public static final String TAG_FRAG_LOGIN = "FRAG_LOGIN";
     public static final String TAG_FRAG_REGISTER = "FRAG_REGISTER";
+    public static final String TAG_REQUEST_LOGIN = "REQUEST_LOGIN";
 
-    public static final String URL_BASE = "";
-    public static final String URL_NEW_USER = "";
-    public static final String URL_CHECK_USER = "";
-    public static final String URL_GET_TASKS = "";
-    public static final String URL_POST_TASK = "";
+    public static final String URL_BASE = "https://myrestfulapi.herokuapp.com";
+    public static final String URL_AUTH = "/auth";
+    public static final String URL_USER = "/users";
+    public static final String URL_TASK = "/tasks";
+
+    public static final String METHOD_POST = "POST";
+    public static final String WEB_SERVER_MASTER_KEY = "HB3kBSU1GnVudS53aCZS6n5FlfdL6nyz";
+
+    public static final String PREF_USER = "PREF_USER";
+    public static final String KEY_CREDENTIALS_TOKEN = "KEY_CREDENTIALS_TOKEN";
+    public static final String KEY_USER_JSON = "KEY_USER_JSON";
 
     public static final long MOVE_DEFAULT_TIME = 300;
     public static final long FADE_DEFAULT_TIME = 1000;

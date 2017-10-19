@@ -35,6 +35,13 @@
                 android:text="@string/str_login"
                 android:id="@+id/btnLogin"/>
 
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone"
+                android:id="@+id/progressBar"/>
+
         </LinearLayout>
 
     </ScrollView>

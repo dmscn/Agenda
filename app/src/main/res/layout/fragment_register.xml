@@ -24,7 +24,7 @@
 
                 <EditText
                     style="@style/EditText.Light.Text"
-                    android:id="@+id/edNome"/>
+                    android:id="@+id/edName"/>
 
             </LinearLayout>
 
@@ -38,19 +38,6 @@
                 <EditText
                     style="@style/EditText.Light.Email"
                     android:id="@+id/edEmail"/>
-
-            </LinearLayout>
-
-            <!-- Phone -->
-            <LinearLayout style="@style/ContainerLine.Vertical">
-
-                <TextView
-                    style="@style/Text.Light.Form"
-                    android:text="@string/txt_phone"/>
-
-                <EditText
-                    style="@style/EditText.Light.Number"
-                    android:id="@+id/edPhone"/>
 
             </LinearLayout>
 
@@ -71,6 +58,12 @@
                 style="@style/Button.Bordered"
                 android:text="@string/str_register"
                 android:id="@+id/btnRegister"/>
+
+            <ProgressBar
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="true"
+                android:visibility="gone"/>
 
         </LinearLayout>
 
