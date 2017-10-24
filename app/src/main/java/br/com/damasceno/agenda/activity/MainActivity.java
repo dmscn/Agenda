@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import br.com.damasceno.agenda.constant.Constants;
-import br.com.damasceno.agenda.fragment.TaskListFragment;
+import br.com.damasceno.agenda.fragment.MainFragment;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements Constants {
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements Constants {
         fragment = getSupportFragmentManager().findFragmentByTag(TAG_FRAG_WELCOME);
 
         if(fragment == null) {
-            fragment = new TaskListFragment();
+            fragment = new MainFragment();
         }
 
         fragmentManager
