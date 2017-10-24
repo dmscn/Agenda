@@ -2,23 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/ContainerFull.Vertical"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/background_office">
+    android:fitsSystemWindows="true">
     <ScrollView
         style="@style/Fill_Parent"
         android:fillViewport="true">
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/tabs"
-            style="@style/Fill_Line"
-            app:tabMode="fixed"
-            app:tabGravity="fill">
+        <LinearLayout
+            style="@style/ContainerFull.Vertical"
+            android:id="@+id/container">
 
-            <android.support.design.widget.TabItem
-                style="@style/Fill_Line"
-                android:text="Tab 1"/>
-
-        </android.support.design.widget.TabLayout>
+        </LinearLayout>
 
 
     </ScrollView>

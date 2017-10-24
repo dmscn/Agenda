@@ -2,28 +2,30 @@ package br.com.damasceno.agenda.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
+import br.com.damasceno.agenda.constant.Constants;
 
 /**
  * Created by dmscn on 18/10/17.
  */
 
-public class SharedPreferencesUtil {
+public class SharedPreferencesUtil implements Constants {
 
-    public static void setPreferenciaString(Context context, String nomePreferencia, String chave, String valor) {
+    public static void storeCredentials(Context context, String credentialsToken) {
 
-        SharedPreferences.Editor editor = context.getSharedPreferences(nomePreferencia, Context.MODE_PRIVATE).edit();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
-        editor.putString(chave, valor);
+        editor.putString(KEY_CREDENTIALS_TOKEN, credentialsToken);
         editor.commit();
     }
 
-    public static String getPreferenciaString(Context context, String nomePreferencia, String chave) {
+    public static String getCredentials(Context context) {
 
-        String strValor;
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String credentials = sharedPreferences.getString(KEY_CREDENTIALS_TOKEN, null);
 
-        SharedPreferences preferences = context.getSharedPreferences(nomePreferencia, Context.MODE_PRIVATE);
-        strValor = preferences.getString(chave, null);
-
-        return strValor;
+        return credentials;
     }
 }

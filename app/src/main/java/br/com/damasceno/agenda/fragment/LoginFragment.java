@@ -1,5 +1,7 @@
 package br.com.damasceno.agenda.fragment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -35,6 +38,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import br.com.damasceno.agenda.activity.MainActivity;
 import br.com.damasceno.agenda.activity.R;
 import br.com.damasceno.agenda.constant.Constants;
 import br.com.damasceno.agenda.model.User;
@@ -90,15 +94,15 @@ public class LoginFragment extends Fragment implements Constants {
 
     private void sendRequestLogin() {
 
+        // request url to login
         String url = URL_BASE + URL_AUTH;
 
-        //Prepare Layout
-        edUsername.setEnabled(false);
-        edUsername.setFocusable(false);
-        edPassword.setEnabled(false);
-        edPassword.setFocusable(false);
+        // Hide Inputs
+        edUsername.setVisibility(View.GONE);
+        edPassword.setVisibility(View.GONE);
         btnLogin.setVisibility(View.GONE);
         progressBar.setVisibility(View.VISIBLE);
+
 
         // Data Params to JSON
         HashMap<String, String> params = new HashMap<String, String>();
@@ -112,19 +116,29 @@ public class LoginFragment extends Fragment implements Constants {
             public void onResponse(JSONObject response) {
 
                 try {
+
+                    user = new User();
+
+                    // Save User Token
                     user.setToken(response.get("token").toString());
 
+                    // JSON String User
                     String jsonUser = response.getJSONObject("user").toString();
 
+                    // Mapping the JSON and filling the User
                     ObjectMapper mapper = new ObjectMapper();
                     user = mapper.readValue(jsonUser, User.class);
 
+                    // Generating the credentials token
                     String credentialsToken = "Basic " + Base64.encodeToString((edUsername.getText().toString() + ":" + edPassword.getText().toString()).getBytes(), Base64.DEFAULT);
 
-                    SharedPreferencesUtil.setPreferenciaString(getActivity(), PREF_USER, KEY_CREDENTIALS_TOKEN, credentialsToken);
-                    SharedPreferencesUtil.setPreferenciaString(getActivity(), PREF_USER, KEY_USER_JSON, jsonUser);
+                    // Storing the credentials
+                    SharedPreferencesUtil.storeCredentials(getActivity().getApplicationContext(), credentialsToken);
 
-                    // TODO: Redirect User
+                    // Redirecting to Main Activity
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -138,6 +152,14 @@ public class LoginFragment extends Fragment implements Constants {
 
                 ToastUtil.toast(getActivity(), getString(R.string.msg_username_password_incorrect));
                 Log.i(TAG_LOG, "Error : " + error.toString());
+
+                // Show Inputs
+                edUsername.setVisibility(View.VISIBLE);
+                edUsername.setText("");
+                edPassword.setVisibility(View.VISIBLE);
+                edPassword.setText("");
+                btnLogin.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.GONE);
             }
         }) {
 
@@ -153,7 +175,6 @@ public class LoginFragment extends Fragment implements Constants {
                 return params;
             }
         };
-
 
         jsonRequest.setTag(TAG_REQUEST_LOGIN);
         requestQueue.add(jsonRequest);

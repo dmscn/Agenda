@@ -17,7 +17,7 @@
                 android:id="@+id/imgLogo"/>
 
             <EditText
-                style="@style/EditText.Light.Text"
+                style="@style/EditText.Light.Email"
                 android:hint="@string/hint_username"
                 android:drawableLeft="@drawable/ic_user_light"
                 android:drawablePadding="10dp"

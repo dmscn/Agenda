@@ -21,7 +21,6 @@ public interface Constants {
 
     public static final String PREF_USER = "PREF_USER";
     public static final String KEY_CREDENTIALS_TOKEN = "KEY_CREDENTIALS_TOKEN";
-    public static final String KEY_USER_JSON = "KEY_USER_JSON";
 
     public static final long MOVE_DEFAULT_TIME = 300;
     public static final long FADE_DEFAULT_TIME = 1000;

@@ -107,15 +107,19 @@ public class RegisterFragment extends Fragment implements Constants {
                     public void onResponse(JSONObject response) {
 
                         try {
+
+                            // JSON String User
                             String jsonUser = response.getJSONObject("user").toString();
 
+                            // Mapping the String and filling the User
                             ObjectMapper mapper = new ObjectMapper();
                             user = mapper.readValue(jsonUser, User.class);
 
+                            // Generating the credentials token
                             String credentialsToken = "Basic " + Base64.encodeToString((edEmail.getText().toString() + ":" + edPassword.getText().toString()).getBytes(), Base64.DEFAULT);
 
-                            SharedPreferencesUtil.setPreferenciaString(getActivity(), PREF_USER, KEY_CREDENTIALS_TOKEN, credentialsToken);
-                            SharedPreferencesUtil.setPreferenciaString(getActivity(), PREF_USER, KEY_USER_JSON, jsonUser);
+                            // Storing the credentials token
+                            SharedPreferencesUtil.storeCredentials(getActivity(), credentialsToken);
 
                             // TODO: Redirect User
 
