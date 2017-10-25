@@ -24,4 +24,8 @@ public interface Constants {
 
     public static final long MOVE_DEFAULT_TIME = 300;
     public static final long FADE_DEFAULT_TIME = 1000;
+
+    public static final String FRAG_TASK_TITLE = "Tasks";
+    public static final String FRAG_EVENT_TITLE = "Events";
+    public static final String FRAG_CONTACT_TITLE = "Contacts";
 }

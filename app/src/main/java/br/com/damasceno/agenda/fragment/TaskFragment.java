@@ -1,6 +1,7 @@
 package br.com.damasceno.agenda.fragment;
 
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,12 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import br.com.damasceno.agenda.activity.R;
-import butterknife.ButterKnife;
 
-public class MainFragment extends Fragment {
+public class TaskFragment extends Fragment {
 
-
-    public MainFragment() {
+    public TaskFragment() {
         // Required empty public constructor
     }
 
@@ -22,10 +21,11 @@ public class MainFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_main, container, false);
-        ButterKnife.bind(this, view);
+        return inflater.inflate(R.layout.fragment_task, container, false);
+    }
 
-        return view;
+    public interface OnFragmentInteractionListener {
+        void onFragmentInteraction(Uri uri);
     }
 
 }

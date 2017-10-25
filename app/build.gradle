@@ -31,24 +31,18 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+
+
+
+
     compile 'com.android.support:appcompat-v7:26.0.0'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:support-v4:26.0.0'
-    testCompile 'junit:junit:4.12'
-
-    // Adding Butter Knife
-    compile 'com.jakewharton:butterknife:8.8.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
-    // Adding Saripaar (Validate Fields)
-    compile 'com.mobsandgeeks:android-saripaar:2.0.2'
-
-    // Adding Volley (HTTP Requests)
-    compile 'com.android.volley:volley:1.1.0-rc1'
-
-    // Adding Jackson
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
-
-    // Adding Design Suppor Library
     compile 'com.android.support:design:26.0.0'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    compile 'com.mobsandgeeks:android-saripaar:2.0.2'
+    compile 'com.android.volley:volley:1.1.0-rc1'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
 }
