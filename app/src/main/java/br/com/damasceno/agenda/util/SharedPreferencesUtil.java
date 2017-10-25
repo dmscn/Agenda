@@ -6,10 +6,6 @@ import android.preference.PreferenceManager;
 
 import br.com.damasceno.agenda.constant.Constants;
 
-/**
- * Created by dmscn on 18/10/17.
- */
-
 public class SharedPreferencesUtil implements Constants {
 
     public static void storeCredentials(Context context, String credentialsToken) {
@@ -18,7 +14,7 @@ public class SharedPreferencesUtil implements Constants {
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(KEY_CREDENTIALS_TOKEN, credentialsToken);
-        editor.commit();
+        editor.apply();
     }
 
     public static String getCredentials(Context context) {
@@ -27,5 +23,14 @@ public class SharedPreferencesUtil implements Constants {
         String credentials = sharedPreferences.getString(KEY_CREDENTIALS_TOKEN, null);
 
         return credentials;
+    }
+
+    public static void removeSharedPreferences(Context context) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.remove(KEY_CREDENTIALS_TOKEN);
+        editor.apply();
     }
 }

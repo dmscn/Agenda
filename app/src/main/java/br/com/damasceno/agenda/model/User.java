@@ -1,12 +1,15 @@
 package br.com.damasceno.agenda.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.orm.SugarRecord;
+
+import java.io.Serializable;
 
 import br.com.damasceno.agenda.constant.Constants;
 
-public class User implements Constants {
+public class User extends SugarRecord implements Serializable, Constants {
     @JsonProperty("id")
-    private String id;
+    private String idUser;
 
     @JsonProperty("name")
     private String name;
@@ -23,12 +26,14 @@ public class User implements Constants {
     @JsonProperty("createdAt")
     private String createdAt;
 
-    public String getId() {
-        return id;
+    public User() { }
+
+    public String getIdUser() {
+        return idUser;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setIdUser(String idUser) {
+        this.idUser = idUser;
     }
 
     public String getName() {

@@ -21,8 +21,6 @@ public class SplashActivity extends AppCompatActivity implements Constants {
         // Verify if user is logged in
         if(credentials != null) {
 
-            ToastUtil.toast(this, "Tem credenciais salvas : " + credentials);
-
             // Redirect to Main Activity
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
@@ -30,8 +28,6 @@ public class SplashActivity extends AppCompatActivity implements Constants {
             return;
 
         } else {
-
-            ToastUtil.toast(this, "Nao tem credenciais salvas");
 
             // Redirect to Login Activity
             Intent intent = new Intent(this, WelcomeActivity.class);
