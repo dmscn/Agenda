@@ -1,20 +1,14 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/main_layout">
-    <ScrollView
-        style="@style/Fill_Parent">
+    android:layout_height="wrap_content"
+    android:id="@+id/main_layout"
+    app:behavior_overlapTop="80dp">
 
-        <LinearLayout
-            style="@style/ContainerFull.Vertical">
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="4dp"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="4dp"/>
-
-        </LinearLayout>
-
-    </ScrollView>
-</FrameLayout>
+</android.support.v4.widget.NestedScrollView>

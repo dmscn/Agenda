@@ -36,10 +36,6 @@
         <item name="android:windowBackground">@drawable/background</item>
     </style>
 
-
-
-
-
     <!-- Width & Height -->
 
     <style name="Fill_Parent">
@@ -58,7 +54,7 @@
     </style>
 
 
-    <!-- Containers -->
+    <!-- View Groups / Containers -->
 
     <style name="ContainerFull.Vertical" parent="Fill_Parent">
         <item name="android:orientation">vertical</item>

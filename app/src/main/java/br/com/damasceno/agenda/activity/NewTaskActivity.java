@@ -19,9 +19,11 @@ public class NewTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new_task);
         ButterKnife.bind(this);
 
+        /*
+         *  TOOLBAR
+         */
         toolbar.setTitle(getString(R.string.str_new_task));
         setSupportActionBar(toolbar);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(false);
     }
