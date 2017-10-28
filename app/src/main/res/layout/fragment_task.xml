@@ -1,11 +1,20 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:id="@+id/main_layout">
     <ScrollView
-        style="@style/Fill_Parent"
-        android:fillViewport="true">
+        style="@style/Fill_Parent">
 
+        <LinearLayout
+            style="@style/ContainerFull.Vertical">
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"/>
+
+        </LinearLayout>
 
     </ScrollView>
 </FrameLayout>
