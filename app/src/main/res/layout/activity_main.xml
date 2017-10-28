@@ -23,15 +23,46 @@
 
     </LinearLayout>
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        app:fabSize="auto"
-        app:layout_anchor="@id/pager"
-        app:layout_anchorGravity="bottom|right|end"
+    <com.github.clans.fab.FloatingActionMenu
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/fab_margin"
-        android:layout_gravity="bottom|end"
-        android:src="@drawable/ic_add_white_24dp"/>
+        android:layout_gravity="bottom|right"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        app:menu_buttonSpacing="2dp"
+        app:menu_labels_margin="2dp"
+        app:menu_colorNormal="@color/colorAccent"
+        app:menu_colorPressed="@color/colorAccent"
+        app:menu_colorRipple="@color/colorAccent">
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_task"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_task_white_24dp"
+            app:fab_colorNormal="@android:color/darker_gray"
+            app:fab_size="mini"
+            app:fab_label="@string/str_task"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_event"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_event_white_24dp"
+            app:fab_colorNormal="@android:color/darker_gray"
+            app:fab_size="mini"
+            app:fab_label="@string/str_event"/>
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_contact_add_white_24dp"
+            app:fab_colorNormal="@android:color/darker_gray"
+            app:fab_size="mini"
+            app:fab_label="@string/str_contact"/>
+
+    </com.github.clans.fab.FloatingActionMenu>
+
 
 </FrameLayout>

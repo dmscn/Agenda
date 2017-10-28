@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.github.clans.fab.FloatingActionButton;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.iconics.context.IconicsContextWrapper;
@@ -44,6 +45,15 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.fab_task)
+    FloatingActionButton fabTask;
+
+    @BindView(R.id.fab_event)
+    FloatingActionButton fabEvent;
+
+    @BindView(R.id.fab_contact)
+    FloatingActionButton fabContact;
 
     private AlertDialog alert;
 
@@ -171,6 +181,37 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
                 return;
+            }
+        });
+
+
+
+        /*
+         *  FAB ACTIONS
+         */
+
+        // Add new Task
+        fabTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NewTaskActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // Add new Event
+        fabEvent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        // Add new Contact
+        fabContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
 

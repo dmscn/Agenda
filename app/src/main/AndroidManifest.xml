@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="br.com.damasceno.agenda.activity">
 
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -13,11 +13,18 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <meta-data android:name="DATABASE" android:value="agenda.db"/>
-        <meta-data android:name="VERSION" android:value="1"/>
-        <meta-data android:name="QUERY_LOG" android:value="true"/>
-        <meta-data android:name="DOMAIN_PACKAGE_NAME" android:value="br.com.damasceno.agenda.model"/>
+        <meta-data
+            android:name="DATABASE"
+            android:value="agenda.db" />
+        <meta-data
+            android:name="VERSION"
+            android:value="1" />
+        <meta-data
+            android:name="QUERY_LOG"
+            android:value="true" />
+        <meta-data
+            android:name="DOMAIN_PACKAGE_NAME"
+            android:value="br.com.damasceno.agenda.model" />
 
         <activity
             android:name=".SplashActivity"
@@ -28,8 +35,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WelcomeActivity" android:theme="@style/WelcomeTheme"/>
-        <activity android:name=".MainActivity"></activity>
+        <activity
+            android:name=".WelcomeActivity"
+            android:theme="@style/WelcomeTheme" />
+        <activity android:name=".MainActivity" />
+        <activity android:name=".NewTaskActivity"></activity>
     </application>
 
 </manifest>
