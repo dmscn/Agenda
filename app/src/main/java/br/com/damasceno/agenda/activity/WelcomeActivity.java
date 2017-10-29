@@ -1,6 +1,5 @@
 package br.com.damasceno.agenda.activity;
 
-import android.content.Intent;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -49,7 +48,7 @@ public class WelcomeActivity extends AppCompatActivity implements Constants, Wel
         Fragment fragment;
 
         switch (id) {
-            case R.id.btnCallLogin:
+            case R.id.btn_call_login:
 
                 fragment = getSupportFragmentManager().findFragmentByTag(TAG_FRAG_LOGIN);
 
@@ -65,7 +64,7 @@ public class WelcomeActivity extends AppCompatActivity implements Constants, Wel
 
                 break;
 
-            case R.id.btnCallRegister:
+            case R.id.btn_call_register:
 
                 fragment = getSupportFragmentManager().findFragmentByTag(TAG_FRAG_REGISTER);
 

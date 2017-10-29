@@ -3,8 +3,10 @@ package br.com.damasceno.agenda.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.support.design.widget.CollapsingToolbarLayout;
+import android.provider.ContactsContract;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -12,27 +14,33 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.executor.GlideExecutor;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.github.clans.fab.FloatingActionButton;
 import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
-import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
-import com.mikepenz.materialdrawer.icons.MaterialDrawerFont;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
+import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
+import com.mikepenz.materialdrawer.util.DrawerImageLoader;
+import com.mikepenz.materialdrawer.util.DrawerUIUtils;
 
 import br.com.damasceno.agenda.adapter.PageAdapter;
 import br.com.damasceno.agenda.constant.Constants;
 import br.com.damasceno.agenda.fragment.ContactFragment;
 import br.com.damasceno.agenda.fragment.EventFragment;
 import br.com.damasceno.agenda.fragment.TaskFragment;
-import br.com.damasceno.agenda.util.SharedPreferencesUtil;
+import br.com.damasceno.agenda.model.User;
+import br.com.damasceno.agenda.util.SharedPreferencesUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -93,10 +101,12 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
                 .withIcon(GoogleMaterial.Icon.gmd_settings)
                 .withName(getString(R.string.str_settings));
 
-        ProfileDrawerItem profile = new ProfileDrawerItem()
-                .withName("Leonardo Damasceno")      // TODO: Get username
-                .withEmail("email@email.com");       // TODO: Get email
-                //.withIcon()
+        User profile = User.findById(User.class, 1);
+
+        ProfileDrawerItem profileItem = new ProfileDrawerItem()
+                .withName(profile.getName())
+                .withEmail(profile.getEmail());
+                //.withIcon();
 
         // Account Header
         final AccountHeader accountHeader = new AccountHeaderBuilder()
@@ -228,7 +238,11 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
                     public void onClick(DialogInterface dialog, int which) {
 
                         // Remove user credentials from SharedPreferences
-                        SharedPreferencesUtil.removeSharedPreferences(MainActivity.this.getApplicationContext());
+                        SharedPreferencesUtils.removeSharedPreferences(MainActivity.this.getApplicationContext());
+
+                        // Remove user from DB
+                        User profile = User.findById(User.class, 1);
+                        profile.delete();
 
                         // Redirect user to login
                         Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);

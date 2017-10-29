@@ -1,13 +1,25 @@
 package br.com.damasceno.agenda.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonRootName;
+
 /**
  * Created by dmscn on 18/10/17.
  */
 
+@JsonRootName(value = "task")
 public class Task {
+
+    @JsonProperty(value = "title")
     private String title;
+
+    @JsonProperty(value = "label")
     private String label;
+
+    @JsonProperty(value = "text")
     private String text;
+
+    @JsonProperty(value = "date")
     private String date;
 
 

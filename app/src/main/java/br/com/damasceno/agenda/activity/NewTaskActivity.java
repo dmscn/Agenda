@@ -4,6 +4,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -12,6 +15,18 @@ public class NewTaskActivity extends AppCompatActivity {
 
     @BindView(R.id.toolbar)
     Toolbar toolbar;
+
+    @BindView(R.id.ed_task)
+    EditText edTask;
+
+    @BindView(R.id.ed_description)
+    EditText edDescription;
+
+    @BindView(R.id.label)
+    LinearLayout label;
+
+    @BindView(R.id.date)
+    LinearLayout date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +41,23 @@ public class NewTaskActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(false);
+
+        // Handle clicks in Label and Date
+        label.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // popup list of options to label
+                // default is regular tasks
+            }
+        });
+
+        date.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // popup calendar
+                // default is current date
+            }
+        });
     }
 
     // Handle Back Button in Toolbar

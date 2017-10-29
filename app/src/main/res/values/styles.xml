@@ -85,6 +85,10 @@
         <item name="android:paddingLeft">5dp</item>
     </style>
 
+    <style name="MiniTitle" parent="Wrap_Content">
+        <item name="android:textAppearance">@style/Base.TextAppearance.AppCompat.Body1</item>
+    </style>
+
     <!-- EditText -->
     <style name="EditText.Light" parent="Fill_Line">
         <item name="android:layout_marginLeft">20dp</item>
@@ -121,5 +125,10 @@
     </style>
 
     <!-- ImageView -->
-
+    <style name="IconLeft">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:tint">@color/colorGrayDark</item>
+    </style>
 </resources>

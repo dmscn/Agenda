@@ -19,13 +19,13 @@
             <Button
                 style="@style/Button.Bordered"
                 android:text="@string/str_login"
-                android:id="@+id/btnCallLogin"/>
+                android:id="@+id/btn_call_login"/>
 
             <Button
                 style="@style/Button.Bordered"
                 android:layout_marginTop="10dp"
                 android:text="@string/str_register"
-                android:id="@+id/btnCallRegister"/>
+                android:id="@+id/btn_call_register"/>
 
         </LinearLayout>
 

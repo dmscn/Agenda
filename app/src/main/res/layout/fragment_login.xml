@@ -9,6 +9,7 @@
             style="@style/ContainerFull.Vertical"
             android:gravity="center">
 
+
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -16,33 +17,51 @@
                 android:paddingBottom="20dp"
                 android:id="@+id/imgLogo"/>
 
-            <EditText
-                style="@style/EditText.Light.Email"
-                android:hint="@string/hint_username"
-                android:drawableLeft="@drawable/ic_user_light"
-                android:drawablePadding="10dp"
-                android:id="@+id/edUsername"/>
+            <LinearLayout
+                style="@style/ContainerLine.Vertical"
+                android:gravity="center"
+                android:id="@+id/input_container">
 
-            <EditText
-                style="@style/EditText.Light.Password"
-                android:hint="@string/hint_password"
-                android:drawableLeft="@drawable/ic_lock_light"
-                android:drawablePadding="10dp"
-                android:id="@+id/edPassword"/>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorWhite">
 
-            <Button
-                style="@style/Button.Bordered"
-                android:text="@string/str_login"
-                android:id="@+id/btnLogin"/>
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/ed_username"
+                        style="@style/EditText.Light.Email"
+                        android:ems="10"
+                        android:hint="@string/str_username"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColorHint="@color/colorWhite">
+
+                    <android.support.design.widget.TextInputEditText
+                        android:id="@+id/ed_password"
+                        style="@style/EditText.Light.Password"
+                        android:ems="10"
+                        android:hint="@string/str_password"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    style="@style/Button.Bordered"
+                    android:text="@string/str_login"
+                    android:id="@+id/btnLogin"/>
+
+            </LinearLayout>
 
             <ProgressBar
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:indeterminate="true"
                 android:visibility="gone"
-                android:id="@+id/progressBar"/>
+                android:id="@+id/progress_bar"/>
 
         </LinearLayout>
-
     </ScrollView>
 </FrameLayout>

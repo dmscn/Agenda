@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 
 import br.com.damasceno.agenda.constant.Constants;
 
-public class SharedPreferencesUtil implements Constants {
+public class SharedPreferencesUtils implements Constants {
 
     public static void storeCredentials(Context context, String credentialsToken) {
 

@@ -39,7 +39,9 @@
             android:name=".WelcomeActivity"
             android:theme="@style/WelcomeTheme" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".NewTaskActivity"></activity>
+        <activity
+            android:name=".NewTaskActivity"
+            android:windowSoftInputMode="stateVisible"></activity>
     </application>
 
 </manifest>
