@@ -1,18 +1,24 @@
 package br.com.damasceno.agenda.model;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
+import android.support.annotation.NonNull;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.orm.SugarRecord;
 
 import java.io.Serializable;
 
 import br.com.damasceno.agenda.constant.Constants;
 
 @JsonRootName(value = "user")
-public class User extends SugarRecord implements Serializable, Constants {
+@Entity
+public class User implements Serializable, Constants {
 
     @JsonProperty(value = "id")
-    private String idUser;
+    @PrimaryKey
+    @NonNull
+    private String id;
 
     @JsonProperty(value = "name")
     private String name;
@@ -34,12 +40,12 @@ public class User extends SugarRecord implements Serializable, Constants {
 
     public User() { }
 
-    public String getIdUser() {
-        return idUser;
+    public String getId() {
+        return id;
     }
 
-    public void setIdUser(String idUser) {
-        this.idUser = idUser;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -81,7 +87,6 @@ public class User extends SugarRecord implements Serializable, Constants {
     public void setToken(String token) {
         this.token = token;
     }
-
 
     public String getCreatedAt() {
         return createdAt;

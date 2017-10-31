@@ -10,6 +10,16 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation" : "$projectDir/schemas".toString()]
+            }
+        }
+
+        sourceSets {
+            androidTest.assets.srcDirs += files("$projectDir/schemas".toString())
+        }
     }
     buildTypes {
         release {
@@ -30,32 +40,40 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    compile 'com.android.support:support-v4:26.1.0'
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
 
-
-
+    // Android Room Persistence
+    compile 'android.arch.lifecycle:extensions:1.0.0-rc1'
+    compile 'android.arch.persistence.room:runtime:1.0.0-rc1'
+    annotationProcessor 'android.arch.lifecycle:compiler:1.0.0-rc1'
+    annotationProcessor 'android.arch.persistence.room:compiler:1.0.0-rc1'
 
 
     compile('com.mikepenz:materialdrawer:5.9.5@aar') {
         transitive = true
     }
 
-
-
-    compile 'com.android.support:support-v4:26.0.0'
-    compile 'com.android.support:appcompat-v7:26.0.0'
-    compile 'com.android.support:design:26.0.0'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    // ButterKnife
     compile 'com.jakewharton:butterknife:8.8.1'
-    compile 'com.mobsandgeeks:android-saripaar:2.0.2'
-    compile 'com.android.volley:volley:1.1.0-rc1'
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
-    compile 'com.mikepenz:iconics-core:2.9.3@aar'
-    compile 'com.mikepenz:google-material-typeface:2.2.0.1@aar'
-    compile 'com.github.bumptech.glide:glide:4.2.0'
-    compile 'com.github.satyan:sugar:1.4'
-    compile 'com.github.clans:fab:1.6.4'
-    testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+
+    // Saripaar
+    compile 'com.mobsandgeeks:android-saripaar:2.0.2'
+
+    // Volley (Http Requests)
+    compile 'com.android.volley:volley:1.1.0-rc1'
+
+    // Jackson Databind
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.3.2'
+
+    // Glide
+    compile 'com.github.bumptech.glide:glide:4.2.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.2.0'
 
+    // Fab
+    compile 'com.github.clans:fab:1.6.4'
 }

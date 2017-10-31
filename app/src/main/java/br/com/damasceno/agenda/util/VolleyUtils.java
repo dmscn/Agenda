@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import br.com.damasceno.agenda.constant.Constants;
+import br.com.damasceno.agenda.database.AppDatabase;
 import br.com.damasceno.agenda.model.User;
 
 public class VolleyUtils implements Constants {
@@ -50,23 +51,23 @@ public class VolleyUtils implements Constants {
 
                         try {
 
-                            User user = new User();
+                            User profile = new User();
 
                             // Save User Token
-                            user.setToken(response.get("token").toString());
+                            profile.setToken(response.get("token").toString());
 
                             // JSON String User
                             String jsonUser = response.getJSONObject("user").toString();
 
                             // Mapping the JSON and filling the User
                             ObjectMapper mapper = new ObjectMapper();
-                            user = mapper.readValue(jsonUser, User.class);
+                            profile = mapper.readValue(jsonUser, User.class);
+
+                            // Storing User Profile
+                            SharedPreferencesUtils.storeUserProfile(context.getApplicationContext(), profile.getName(), profile.getEmail(), profile.getPicture());
 
                             // Storing the credentials
                             SharedPreferencesUtils.storeCredentials(context.getApplicationContext(), credentialsToken);
-
-                            Log.i(TAG_LOG, "credentials ->  " + credentialsToken);
-                            Log.i(TAG_LOG, "SharedPreferences -> " + SharedPreferencesUtils.getCredentials(context.getApplicationContext()));
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -137,24 +138,18 @@ public class VolleyUtils implements Constants {
                             // JSON String User
                             String jsonUser = response.toString();
 
-                            Log.i(TAG_LOG, "JSON: " + jsonUser);
-
                             // Mapping the String and filling User object
                             ObjectMapper mapper = new ObjectMapper();
                             User profile = mapper.readValue(jsonUser, User.class);
 
-                            // Saving User with SugarORM
-                            profile.save();
+                            // Storing User Profile
+                            SharedPreferencesUtils.storeUserProfile(context.getApplicationContext(), profile.getName(), profile.getEmail(), profile.getPicture());
 
                             // Generating credentials token
                             String credentialsToken = "Basic " + Base64.encodeToString((profile.getEmail() + ":" +profile.getPassword()).getBytes(), Base64.DEFAULT);
 
                             // Storing credentials
-                            SharedPreferencesUtils.storeCredentials(context, credentialsToken);
-
-                            // TODO redirect user
-
-
+                            SharedPreferencesUtils.storeCredentials(context.getApplicationContext(), credentialsToken);
 
                         } catch (Exception e) {
 

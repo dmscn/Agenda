@@ -3,10 +3,9 @@ package br.com.damasceno.agenda.activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.provider.ContactsContract;
+import android.os.AsyncTask;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
@@ -16,11 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.executor.GlideExecutor;
-import com.bumptech.glide.request.target.SimpleTarget;
 import com.github.clans.fab.FloatingActionButton;
-import com.mikepenz.google_material_typeface_library.GoogleMaterial;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
@@ -34,11 +29,15 @@ import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
 
+import java.util.HashMap;
+
 import br.com.damasceno.agenda.adapter.PageAdapter;
 import br.com.damasceno.agenda.constant.Constants;
+import br.com.damasceno.agenda.database.AppDatabase;
 import br.com.damasceno.agenda.fragment.ContactFragment;
 import br.com.damasceno.agenda.fragment.EventFragment;
 import br.com.damasceno.agenda.fragment.TaskFragment;
+import br.com.damasceno.agenda.helper.GlideApp;
 import br.com.damasceno.agenda.model.User;
 import br.com.damasceno.agenda.util.SharedPreferencesUtils;
 import butterknife.BindView;
@@ -64,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
     @BindView(R.id.fab_contact)
     FloatingActionButton fabContact;
 
+    private AppDatabase db;
+    private User currentUser;
     private AlertDialog alert;
 
     @Override
@@ -74,6 +75,8 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
 
         String userName = null;
         String userEmail = null;
+
+        db = AppDatabase.getInstance(this);
 
         /*
          *  TOOLBAR
@@ -88,25 +91,62 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
          *  DRAWER
          */
 
+        //initialize and create the image loader logic
+        DrawerImageLoader.init(new AbstractDrawerImageLoader() {
+            @Override
+            public void set(ImageView imageView, Uri uri, Drawable placeholder, String tag) {
+
+                GlideApp
+                        .with(imageView.getContext())
+                        .load(uri)
+                        .placeholder(placeholder)
+                        .into(imageView);
+            }
+
+
+            // TODO: CLEAN THIS MESS!!!!!
+
+            @Override
+            public Drawable placeholder(Context ctx, String tag) {
+
+                //define different placeholders for different imageView targets
+                //default tags are accessible via the DrawerImageLoader.Tags
+                if (DrawerImageLoader.Tags.PROFILE.name().equals(tag)) {
+                    return DrawerUIUtils.getPlaceHolder(ctx);
+                } else if (DrawerImageLoader.Tags.ACCOUNT_HEADER.name().equals(tag)) {
+                    return new IconicsDrawable(ctx).iconText(" ").backgroundColorRes(com.mikepenz.materialdrawer.R.color.primary).sizeDp(56);
+                } else if ("customUrlItem".equals(tag)) {
+                    return new IconicsDrawable(ctx).iconText(" ").backgroundColorRes(R.color.md_red_500).sizeDp(56);
+                }
+
+                //we use the default one for
+                //DrawerImageLoader.Tags.PROFILE_DRAWER_ITEM.name()
+
+                return super.placeholder(ctx, tag);
+            }
+        });
+
         // Drawer Items
         PrimaryDrawerItem itemLogout = new PrimaryDrawerItem()
                 .withIdentifier(1)
                 .withSelectable(false)
-                .withIcon(GoogleMaterial.Icon.gmd_square_right)
+                //.withIcon(GoogleMaterial.Icon.gmd_square_right) // TODO: CHANGE THIS ICON PROPERLY
                 .withName(getString(R.string.str_logout));
 
         PrimaryDrawerItem itemSettings = new PrimaryDrawerItem()
                 .withIdentifier(2)
                 .withSelectable(false)
-                .withIcon(GoogleMaterial.Icon.gmd_settings)
+                //.withIcon(GoogleMaterial.Icon.gmd_settings)      // TODO: ALSO THIS ONE
                 .withName(getString(R.string.str_settings));
 
-        User profile = User.findById(User.class, 1);
+        // Getting User Profile from SharedPreferences
+        HashMap<String, String> userProfile = SharedPreferencesUtils.getUserProfile(this.getApplicationContext());
 
         ProfileDrawerItem profileItem = new ProfileDrawerItem()
-                .withName(profile.getName())
-                .withEmail(profile.getEmail());
-                //.withIcon();
+                .withName(userProfile.get(KEY_USER_NAME))
+                .withEmail(userProfile.get(KEY_USER_EMAIL))
+                .withIcon(userProfile.get(KEY_USER_PICTURE));
+
 
         // Account Header
         final AccountHeader accountHeader = new AccountHeaderBuilder()
@@ -114,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
                 .withCompactStyle(false)
                 .withSavedInstance(savedInstanceState)
                 .withThreeSmallProfileImages(true)
-                .addProfiles(profile)
+                .addProfiles(profileItem)
                 .withHeaderBackground(R.drawable.drawer_background)
                 .withSelectionListEnabledForSingleProfile(false)
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
@@ -157,8 +197,6 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
                     }
                 })
                 .build();
-
-
 
         /*
          *  TAB LAYOUT
@@ -223,7 +261,6 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
 
             }
         });
-
     }
 
     private void userLogout() {
@@ -232,17 +269,16 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.msg_confirm_title))
                 .setMessage(getString(R.string.msg_confirm_logout))
-                .setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_alert_triangle).paddingDp(3))
+                //.setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_alert_triangle).paddingDp(3))
                 .setPositiveButton(getString(R.string.str_yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         // Remove user credentials from SharedPreferences
-                        SharedPreferencesUtils.removeSharedPreferences(MainActivity.this.getApplicationContext());
+                        SharedPreferencesUtils.removeCredentials(MainActivity.this.getApplicationContext());
 
                         // Remove user from DB
-                        User profile = User.findById(User.class, 1);
-                        profile.delete();
+                        db.userDAO().removeProfile(currentUser);
 
                         // Redirect user to login
                         Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);

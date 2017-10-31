@@ -17,6 +17,9 @@ public interface Constants {
     // Shared Preferences
     public static final String PREF_USER = "PREF_USER";
     public static final String KEY_CREDENTIALS_TOKEN = "KEY_CREDENTIALS_TOKEN";
+    public static final String KEY_USER_NAME = "KEY_USER_NAME";
+    public static final String KEY_USER_EMAIL = "KEY_USER_EMAIL";
+    public static final String KEY_USER_PICTURE = "KEY_USER_PICTURE";
 
     // Fragments
     public static final String FRAG_TASK_TITLE = "Tasks";

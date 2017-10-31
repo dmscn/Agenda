@@ -98,10 +98,13 @@ public class LoginFragment extends Fragment implements Constants {
             @Override
             public void onError(@Nullable String statusCode) {
 
-                if(statusCode.equals("401")) {
-                    ToastUtils.toast(getActivity(), getString(R.string.msg_username_password_incorrect));
-                } else {
-                    ToastUtils.toast(getActivity(), getString(R.string.msg_error_timeout));
+                if(statusCode != null) {
+
+                    if(statusCode.equals("401")) {
+                        ToastUtils.toast(getActivity(), getString(R.string.msg_username_password_incorrect));
+                    } else {
+                        ToastUtils.toast(getActivity(), getString(R.string.msg_error_timeout));
+                    }
                 }
 
                 // Show Inputs
