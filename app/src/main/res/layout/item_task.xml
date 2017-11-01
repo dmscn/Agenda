@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="label"
-            android:drawableRight="@drawable/ic_flag_gray_12dp"
+            android:drawableEnd="@drawable/ic_label_gray_12dp"
             android:drawableTint="@color/colorGrayNormal"
             android:drawablePadding="4dp"
             android:layout_alignRight="@+id/text"
