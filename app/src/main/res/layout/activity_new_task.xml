@@ -92,7 +92,7 @@
 
                 <ImageView
                     style="@style/IconLeft"
-                    android:src="@drawable/ic_label_black_24dp"/>
+                    android:src="@drawable/ic_label_gray_24dp"/>
 
                 <LinearLayout
                     style="@style/ContainerFull.Vertical">
@@ -116,7 +116,7 @@
 
                 <ImageView
                     style="@style/IconLeft"
-                    android:src="@drawable/ic_event_white_24dp"/>
+                    android:src="@drawable/ic_event_gray_24dp"/>
 
                 <LinearLayout
                     style="@style/ContainerFull.Vertical">

@@ -15,7 +15,7 @@
             android:layout_width="28dp"
             android:layout_height="28dp"
             android:layout_centerVertical="true"
-            android:src="@drawable/ic_done_white_24dp"/>
+            android:src="@drawable/ic_done_gray_24dp"/>
 
     </RelativeLayout>
     
@@ -50,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="label"
-            android:drawableRight="@drawable/ic_flag_black_12dp"
+            android:drawableRight="@drawable/ic_flag_gray_12dp"
             android:drawableTint="@color/colorGrayNormal"
             android:drawablePadding="4dp"
             android:layout_alignRight="@+id/text"

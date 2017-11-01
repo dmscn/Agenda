@@ -28,6 +28,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerUIUtils;
+import com.mikepenz.materialize.color.Material;
 
 import java.util.HashMap;
 
@@ -64,7 +65,6 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
     FloatingActionButton fabContact;
 
     private AppDatabase db;
-    private User currentUser;
     private AlertDialog alert;
 
     @Override
@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
         /*
          *  TOOLBAR
          */
+
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -102,41 +103,19 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
                         .placeholder(placeholder)
                         .into(imageView);
             }
-
-
-            // TODO: CLEAN THIS MESS!!!!!
-
-            @Override
-            public Drawable placeholder(Context ctx, String tag) {
-
-                //define different placeholders for different imageView targets
-                //default tags are accessible via the DrawerImageLoader.Tags
-                if (DrawerImageLoader.Tags.PROFILE.name().equals(tag)) {
-                    return DrawerUIUtils.getPlaceHolder(ctx);
-                } else if (DrawerImageLoader.Tags.ACCOUNT_HEADER.name().equals(tag)) {
-                    return new IconicsDrawable(ctx).iconText(" ").backgroundColorRes(com.mikepenz.materialdrawer.R.color.primary).sizeDp(56);
-                } else if ("customUrlItem".equals(tag)) {
-                    return new IconicsDrawable(ctx).iconText(" ").backgroundColorRes(R.color.md_red_500).sizeDp(56);
-                }
-
-                //we use the default one for
-                //DrawerImageLoader.Tags.PROFILE_DRAWER_ITEM.name()
-
-                return super.placeholder(ctx, tag);
-            }
         });
 
         // Drawer Items
         PrimaryDrawerItem itemLogout = new PrimaryDrawerItem()
                 .withIdentifier(1)
                 .withSelectable(false)
-                //.withIcon(GoogleMaterial.Icon.gmd_square_right) // TODO: CHANGE THIS ICON PROPERLY
+                .withIcon(R.drawable.ic_exit_gray_24dp)
                 .withName(getString(R.string.str_logout));
 
         PrimaryDrawerItem itemSettings = new PrimaryDrawerItem()
                 .withIdentifier(2)
                 .withSelectable(false)
-                //.withIcon(GoogleMaterial.Icon.gmd_settings)      // TODO: ALSO THIS ONE
+                .withIcon(R.drawable.ic_settings_gray_24dp)
                 .withName(getString(R.string.str_settings));
 
         // Getting User Profile from SharedPreferences
@@ -269,27 +248,25 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
                 .setTitle(getString(R.string.msg_confirm_title))
                 .setMessage(getString(R.string.msg_confirm_logout))
-                //.setIcon(new IconicsDrawable(this, GoogleMaterial.Icon.gmd_alert_triangle).paddingDp(3))
                 .setPositiveButton(getString(R.string.str_yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // Remove user credentials from SharedPreferences
-                        SharedPreferencesUtils.removeCredentials(MainActivity.this.getApplicationContext());
-
-                        // Remove user from DB
-                        db.userDAO().removeProfile(currentUser);
+                        // Remove User Profile
+                        SharedPreferencesUtils.removeUserProfile(getApplicationContext());
 
                         // Redirect user to login
                         Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);
                         startActivity(intent);
                         finish();
                         return;
+
                     }
                 })
                 .setNegativeButton(getString(R.string.str_no), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+
                         return;
                     }
                 });

@@ -64,10 +64,7 @@ public class VolleyUtils implements Constants {
                             profile = mapper.readValue(jsonUser, User.class);
 
                             // Storing User Profile
-                            SharedPreferencesUtils.storeUserProfile(context.getApplicationContext(), profile.getName(), profile.getEmail(), profile.getPicture());
-
-                            // Storing the credentials
-                            SharedPreferencesUtils.storeCredentials(context.getApplicationContext(), credentialsToken);
+                            SharedPreferencesUtils.storeUserProfile(context.getApplicationContext(), credentialsToken, profile.getName(), profile.getEmail(), profile.getPicture());
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -142,14 +139,11 @@ public class VolleyUtils implements Constants {
                             ObjectMapper mapper = new ObjectMapper();
                             User profile = mapper.readValue(jsonUser, User.class);
 
-                            // Storing User Profile
-                            SharedPreferencesUtils.storeUserProfile(context.getApplicationContext(), profile.getName(), profile.getEmail(), profile.getPicture());
-
                             // Generating credentials token
                             String credentialsToken = "Basic " + Base64.encodeToString((profile.getEmail() + ":" +profile.getPassword()).getBytes(), Base64.DEFAULT);
 
-                            // Storing credentials
-                            SharedPreferencesUtils.storeCredentials(context.getApplicationContext(), credentialsToken);
+                            // Storing User Profile
+                            SharedPreferencesUtils.storeUserProfile(context.getApplicationContext(), credentialsToken, profile.getName(), profile.getEmail(), profile.getPicture());
 
                         } catch (Exception e) {
 

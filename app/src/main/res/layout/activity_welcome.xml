@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_layout"
     style="@style/ContainerFull.Vertical"
-    android:fitsSystemWindows="true"
-    android:background="@drawable/background_office">
+    android:fitsSystemWindows="true">
 
     <LinearLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="16dp"
-        android:id="@+id/container"
+        android:fitsSystemWindows="true"
         android:orientation="vertical"/>
 
 </LinearLayout>

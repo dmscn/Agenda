@@ -1,18 +1,30 @@
 package br.com.damasceno.agenda.activity;
 
+import android.graphics.drawable.Drawable;
 import android.support.annotation.IdRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
 import br.com.damasceno.agenda.constant.Constants;
 import br.com.damasceno.agenda.fragment.LoginFragment;
 import br.com.damasceno.agenda.fragment.RegisterFragment;
 import br.com.damasceno.agenda.fragment.WelcomeFragment;
+import br.com.damasceno.agenda.helper.GlideApp;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class WelcomeActivity extends AppCompatActivity implements Constants, WelcomeFragment.OnButtonClickListener {
+
+    @BindView(R.id.main_layout)
+    LinearLayout background;
 
     private FragmentManager fragmentManager;
 
@@ -20,8 +32,18 @@ public class WelcomeActivity extends AppCompatActivity implements Constants, Wel
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
         ButterKnife.bind(this);
+
+        GlideApp
+                .with(this)
+                .load(R.drawable.background_office)
+                .centerCrop()
+                .into(new SimpleTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(Drawable resource, Transition<? super Drawable> transition) {
+                        background.setBackground(resource);
+                    }
+                });
 
         fragmentManager = getSupportFragmentManager();
 

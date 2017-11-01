@@ -13,37 +13,16 @@ import br.com.damasceno.agenda.constant.Constants;
 
 public class SharedPreferencesUtils implements Constants {
 
-    public static void storeCredentials(Context context, String credentialsToken) {
+
+    /*
+     *   PROFILE
+     */
+    public static void storeUserProfile(Context context, String credentialsToken, String name, String email, String picture) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(KEY_CREDENTIALS_TOKEN, credentialsToken);
-        editor.apply();
-    }
-
-    public static String getCredentials(Context context) {
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String credentials = sharedPreferences.getString(KEY_CREDENTIALS_TOKEN, null);
-
-        return credentials;
-    }
-
-    public static void removeCredentials(Context context) {
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.remove(KEY_CREDENTIALS_TOKEN);
-        editor.apply();
-    }
-
-    public static void storeUserProfile(Context context, String name, String email, String picture) {
-
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
         editor.putString(KEY_USER_NAME, name);
         editor.putString(KEY_USER_EMAIL, email);
         editor.putString(KEY_USER_PICTURE, picture);
@@ -62,4 +41,25 @@ public class SharedPreferencesUtils implements Constants {
 
         return userProfile;
     }
+
+    public static String getCredentials(Context context) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String credentials = sharedPreferences.getString(KEY_CREDENTIALS_TOKEN, null);
+
+        return credentials;
+    }
+
+    public static void removeUserProfile(Context context) {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        editor.remove(KEY_CREDENTIALS_TOKEN);
+        editor.remove(KEY_USER_NAME);
+        editor.remove(KEY_USER_EMAIL);
+        editor.remove(KEY_USER_PICTURE);
+
+        editor.apply();
+    }
+
 }
