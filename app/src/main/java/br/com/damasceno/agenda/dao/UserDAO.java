@@ -16,7 +16,7 @@ public interface UserDAO {
     @Query("SELECT * FROM user LIMIT 1")
     public User getProfile();
 
-    @Delete
-    public void removeProfile(User user);
+    @Query("DELETE FROM user WHERE user.email = :email")
+    public void removeUserByEmail(String email);
 
 }

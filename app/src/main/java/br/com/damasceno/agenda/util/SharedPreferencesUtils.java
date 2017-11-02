@@ -17,12 +17,13 @@ public class SharedPreferencesUtils implements Constants {
     /*
      *   PROFILE
      */
-    public static void storeUserProfile(Context context, String credentialsToken, String name, String email, String picture) {
+    public static void storeUserProfile(Context context, String credentialsToken, String userAcessToken, String name, String email, String picture) {
 
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
         editor.putString(KEY_CREDENTIALS_TOKEN, credentialsToken);
+        editor.putString(KEY_USER_ACCESS_TOKEN, userAcessToken);
         editor.putString(KEY_USER_NAME, name);
         editor.putString(KEY_USER_EMAIL, email);
         editor.putString(KEY_USER_PICTURE, picture);
@@ -48,6 +49,14 @@ public class SharedPreferencesUtils implements Constants {
         String credentials = sharedPreferences.getString(KEY_CREDENTIALS_TOKEN, null);
 
         return credentials;
+    }
+
+    public static String getUserAccessToken(Context context) {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String token = sharedPreferences.getString(KEY_USER_ACCESS_TOKEN, null);
+
+        return token;
     }
 
     public static void removeUserProfile(Context context) {

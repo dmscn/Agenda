@@ -14,6 +14,7 @@
     <string name="msg_error_email_already_exists">This Email Already Exists</string>
     <string name="msg_error_invalid_fields">Invalid Fields</string>
     <string name="msg_error_timeout">Time Out</string>
+    <string name="msg_error_could_not_fetch_from_server">Could not fetch data from the server</string>
 
     <string name="hint_name">Full Name</string>
 

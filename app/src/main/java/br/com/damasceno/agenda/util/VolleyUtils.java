@@ -1,11 +1,9 @@
 package br.com.damasceno.agenda.util;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
-import android.view.View;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -13,21 +11,27 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.deser.std.StringArrayDeserializer;
 
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import br.com.damasceno.agenda.activity.R;
 import br.com.damasceno.agenda.constant.Constants;
 import br.com.damasceno.agenda.database.AppDatabase;
+import br.com.damasceno.agenda.helper.VolleyResponseListener;
+import br.com.damasceno.agenda.model.Task;
 import br.com.damasceno.agenda.model.User;
 
 public class VolleyUtils implements Constants {
 
-    public static final String WEB_SERVER_MASTER_KEY = "HB3kBSU1GnVudS53aCZS6n5FlfdL6nyz";
+    public static final String WEB_SERVER_MASTER_KEY = "QYiVImowlxDeI8rWwBf7pCZ2j3g72gxk";
     public static final String URL_BASE = "https://myrestfulapi.herokuapp.com";
     public static final String URL_AUTH = "/auth";
     public static final String URL_USER = "/users";
@@ -51,10 +55,7 @@ public class VolleyUtils implements Constants {
 
                         try {
 
-                            User profile = new User();
-
-                            // Save User Token
-                            profile.setToken(response.get("token").toString());
+                            final User profile;
 
                             // JSON String User
                             String jsonUser = response.getJSONObject("user").toString();
@@ -63,8 +64,21 @@ public class VolleyUtils implements Constants {
                             ObjectMapper mapper = new ObjectMapper();
                             profile = mapper.readValue(jsonUser, User.class);
 
+                            // Save User Token
+                            profile.setToken(response.get("token").toString());
+
                             // Storing User Profile
-                            SharedPreferencesUtils.storeUserProfile(context.getApplicationContext(), credentialsToken, profile.getName(), profile.getEmail(), profile.getPicture());
+                            SharedPreferencesUtils.storeUserProfile(context.getApplicationContext(), credentialsToken, profile.getToken(), profile.getName(), profile.getEmail(), profile.getPicture());
+
+                            // Save User in Database
+                            AsyncTask.execute(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    AppDatabase db = AppDatabase.getInstance(context);
+                                    db.userDAO().insertUser(profile);
+                                }
+                            });
 
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -132,18 +146,30 @@ public class VolleyUtils implements Constants {
 
                         try {
 
+                            final User profile;
+
                             // JSON String User
                             String jsonUser = response.toString();
 
                             // Mapping the String and filling User object
                             ObjectMapper mapper = new ObjectMapper();
-                            User profile = mapper.readValue(jsonUser, User.class);
+                            profile = mapper.readValue(jsonUser, User.class);
 
                             // Generating credentials token
                             String credentialsToken = "Basic " + Base64.encodeToString((profile.getEmail() + ":" +profile.getPassword()).getBytes(), Base64.DEFAULT);
 
                             // Storing User Profile
-                            SharedPreferencesUtils.storeUserProfile(context.getApplicationContext(), credentialsToken, profile.getName(), profile.getEmail(), profile.getPicture());
+                            SharedPreferencesUtils.storeUserProfile(context.getApplicationContext(), credentialsToken, profile.getToken() ,profile.getName(), profile.getEmail(), profile.getPicture());
+
+                            // Save User in Database
+                            AsyncTask.execute(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    AppDatabase db = AppDatabase.getInstance(context);
+                                    db.userDAO().insertUser(profile);
+                                }
+                            });
 
                         } catch (Exception e) {
 
@@ -177,6 +203,74 @@ public class VolleyUtils implements Constants {
 
         jsonRequest.setTag(TAG_REQUEST_REGISTER);
         VolleySingleton.getInstance(context).addToRequestQueue(jsonRequest);
+
+    }
+
+    public static void requestAllTasks(final Context context, String userAccessToken, final VolleyResponseListener<List<Task>> listener) {
+
+        // Request URL
+        String url = URL_BASE + URL_TASK + "?access_token=" + userAccessToken;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        Log.i(TAG_LOG, "RESPONSE -> " + response);
+
+                        final List<Task> taskList;
+
+                        try {
+                            // Mapping JSON and filling list
+                            ObjectMapper mapper = new ObjectMapper();
+                            taskList = mapper.readValue(response, new TypeReference<List<Task>>(){});
+
+                            // Updating DataBase
+                            AsyncTask.execute(new Runnable() {
+                                @Override
+                                public void run() {
+
+                                    AppDatabase db = AppDatabase.getInstance(context);
+                                    db.taskDAO().insertTasks(taskList);
+                                }
+                            });
+
+                            // Return the Task list
+                            listener.onResponse(taskList);
+
+                        } catch (IOException e) {
+
+                            e.printStackTrace();
+                            listener.onError(context.getString(R.string.msg_error_could_not_fetch_from_server));
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        // Log Volley Error
+                        Log.i(TAG_LOG, "Volley Error: " + error.toString());
+
+                        // Get the Network Response
+                        NetworkResponse networkResponse = error.networkResponse;
+
+                        String statusCode = null;
+
+                        // Verify if there is a status code
+                        if(networkResponse != null) {
+                            statusCode = String.valueOf(networkResponse.statusCode);
+                        }
+
+                        Log.i(TAG_LOG, "Status :" + statusCode);
+
+                        // Return Status Code
+                        listener.onError(statusCode);
+                    }
+                });
+
+        stringRequest.setTag(TAG_REQUEST_ALL_TASKS);
+        VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
 
     }
 

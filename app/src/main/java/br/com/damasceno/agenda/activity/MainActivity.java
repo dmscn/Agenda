@@ -1,22 +1,23 @@
 package br.com.damasceno.agenda.activity;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
 import com.github.clans.fab.FloatingActionButton;
-import com.mikepenz.iconics.IconicsDrawable;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -27,10 +28,9 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
-import com.mikepenz.materialdrawer.util.DrawerUIUtils;
-import com.mikepenz.materialize.color.Material;
 
 import java.util.HashMap;
+import java.util.List;
 
 import br.com.damasceno.agenda.adapter.PageAdapter;
 import br.com.damasceno.agenda.constant.Constants;
@@ -39,8 +39,10 @@ import br.com.damasceno.agenda.fragment.ContactFragment;
 import br.com.damasceno.agenda.fragment.EventFragment;
 import br.com.damasceno.agenda.fragment.TaskFragment;
 import br.com.damasceno.agenda.helper.GlideApp;
-import br.com.damasceno.agenda.model.User;
+import br.com.damasceno.agenda.helper.VolleyResponseListener;
+import br.com.damasceno.agenda.model.Task;
 import br.com.damasceno.agenda.util.SharedPreferencesUtils;
+import br.com.damasceno.agenda.util.VolleyUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
     @BindView(R.id.fab_contact)
     FloatingActionButton fabContact;
 
+    HashMap<String, String> userProfile;
     private AppDatabase db;
     private AlertDialog alert;
 
@@ -119,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
                 .withName(getString(R.string.str_settings));
 
         // Getting User Profile from SharedPreferences
-        HashMap<String, String> userProfile = SharedPreferencesUtils.getUserProfile(this.getApplicationContext());
+        userProfile = SharedPreferencesUtils.getUserProfile(this.getApplicationContext());
 
         ProfileDrawerItem profileItem = new ProfileDrawerItem()
                 .withName(userProfile.get(KEY_USER_NAME))
@@ -254,6 +257,15 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
 
                         // Remove User Profile
                         SharedPreferencesUtils.removeUserProfile(getApplicationContext());
+
+                        // Remove User From Database
+                        AsyncTask.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                db = AppDatabase.getInstance(MainActivity.this);
+                                db.userDAO().removeUserByEmail(userProfile.get(KEY_USER_EMAIL));
+                            }
+                        });
 
                         // Redirect user to login
                         Intent intent = new Intent(MainActivity.this, WelcomeActivity.class);

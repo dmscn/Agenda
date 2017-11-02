@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,31 +14,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mobsandgeeks.saripaar.annotation.Email;
-import com.mobsandgeeks.saripaar.annotation.NotEmpty;
-import com.mobsandgeeks.saripaar.annotation.Password;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.HashMap;
 
 import br.com.damasceno.agenda.activity.MainActivity;
 import br.com.damasceno.agenda.activity.R;
 import br.com.damasceno.agenda.constant.Constants;
 import br.com.damasceno.agenda.model.User;
-import br.com.damasceno.agenda.util.SharedPreferencesUtils;
 import br.com.damasceno.agenda.util.ToastUtils;
-import br.com.damasceno.agenda.util.VolleyResponseListener;
+import br.com.damasceno.agenda.helper.VolleyResponseListener;
 import br.com.damasceno.agenda.util.VolleyUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -96,7 +77,7 @@ public class RegisterFragment extends Fragment implements Constants {
         VolleyUtils.requestRegister(getActivity(), user, new VolleyResponseListener() {
 
             @Override
-            public void onResponse(@Nullable JSONObject response) {
+            public void onResponse(@Nullable Object response) {
 
                 ToastUtils.toast(getActivity(), getString(R.string.msg_success));
 
@@ -106,9 +87,9 @@ public class RegisterFragment extends Fragment implements Constants {
             }
 
             @Override
-            public void onError(@Nullable String statusCode) {
+            public void onError(@Nullable String error) {
 
-                switch (statusCode) {
+                switch (error) {
 
                     case "400":
                         ToastUtils.toast(getActivity(), getString(R.string.msg_error_invalid_fields));
@@ -119,7 +100,7 @@ public class RegisterFragment extends Fragment implements Constants {
                         break;
 
                     default:
-                        Log.i(TAG_LOG, "Status Code : " + statusCode);
+                        Log.i(TAG_LOG, "Status Code : " + error);
                 }
 
                 // Showing back the Inputs

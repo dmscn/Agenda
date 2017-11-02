@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,19 +14,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
-import org.json.JSONObject;
-
 import br.com.damasceno.agenda.activity.MainActivity;
 import br.com.damasceno.agenda.activity.R;
 import br.com.damasceno.agenda.constant.Constants;
 import br.com.damasceno.agenda.util.ToastUtils;
-import br.com.damasceno.agenda.util.VolleyResponseListener;
+import br.com.damasceno.agenda.helper.VolleyResponseListener;
 import br.com.damasceno.agenda.util.VolleyUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,7 +81,7 @@ public class LoginFragment extends Fragment implements Constants {
 
         VolleyUtils.requestAuth(getActivity(), credentialsToken, new VolleyResponseListener() {
             @Override
-            public void onResponse(@Nullable JSONObject response) {
+            public void onResponse(@Nullable Object response) {
 
                 ToastUtils.toast(getActivity(), getString(R.string.msg_success));
 
@@ -96,11 +92,11 @@ public class LoginFragment extends Fragment implements Constants {
             }
 
             @Override
-            public void onError(@Nullable String statusCode) {
+            public void onError(@Nullable String error) {
 
-                if(statusCode != null) {
+                if(error != null) {
 
-                    if(statusCode.equals("401")) {
+                    if(error.equals("401")) {
                         ToastUtils.toast(getActivity(), getString(R.string.msg_username_password_incorrect));
                     } else {
                         ToastUtils.toast(getActivity(), getString(R.string.msg_error_timeout));

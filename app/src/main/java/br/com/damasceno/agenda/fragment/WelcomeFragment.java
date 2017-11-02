@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.lang.annotation.Target;
+
 import br.com.damasceno.agenda.activity.R;
 import br.com.damasceno.agenda.activity.WelcomeActivity;
 import br.com.damasceno.agenda.constant.Constants;
@@ -58,6 +60,7 @@ public class WelcomeFragment extends Fragment implements Constants {
                 .with(getActivity())
                 .asBitmap()
                 .load(R.drawable.logo_with_brand)
+                .override(ViewGroup.LayoutParams.MATCH_PARENT)
                 .fitCenter()
                 .into(imgLogo);
 
