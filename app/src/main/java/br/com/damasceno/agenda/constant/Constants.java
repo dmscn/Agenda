@@ -1,5 +1,12 @@
 package br.com.damasceno.agenda.constant;
 
+import android.content.ClipData;
+
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+
+import br.com.damasceno.agenda.util.SharedPreferencesUtils;
+
 /**
  * Created by dmscn on 14/10/17.
  */
@@ -13,6 +20,8 @@ public interface Constants {
     public static final String TAG_REQUEST_LOGIN = "REQUEST_LOGIN";
     public static final String TAG_REQUEST_REGISTER = "REQUEST_REGISTER";
     public static final String TAG_REQUEST_ALL_TASKS = "REQUEST_ALL_TASKS";
+    public static final String TAG_REQUEST_ADD_NEW_TASK = "REQUEST_ADD_NEW_TASK";
+    public static final String TAG_REQUEST_REMOVE_TASK = "REQUEST_REMOVE_TASK";
 
     // Shared Preferences
     public static final String PREF_USER = "PREF_USER";
@@ -26,4 +35,13 @@ public interface Constants {
     public static final String FRAG_TASK_TITLE = "Tasks";
     public static final String FRAG_EVENT_TITLE = "Events";
     public static final String FRAG_CONTACT_TITLE = "Contacts";
+
+    // Task Labels
+    public static final String[] LABELS = {
+            "Regular",
+            "Work",
+            "School",
+            "Home"
+    };
+
 }

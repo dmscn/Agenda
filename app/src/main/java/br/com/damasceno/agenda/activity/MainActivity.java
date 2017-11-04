@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.LayoutInflaterCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AlertDialog;
@@ -18,6 +19,10 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
+import com.mikepenz.community_material_typeface_library.CommunityMaterial;
+import com.mikepenz.iconics.IconicsDrawable;
+import com.mikepenz.iconics.context.IconicsLayoutInflater2;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -57,6 +62,9 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
     @BindView(R.id.toolbar)
     Toolbar toolbar;
 
+    @BindView(R.id.fab_menu)
+    FloatingActionMenu fabMenu;
+
     @BindView(R.id.fab_task)
     FloatingActionButton fabTask;
 
@@ -72,6 +80,10 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        // Defining IconicsLayoutInflater to enable automatic xml icons detection
+        LayoutInflaterCompat.setFactory2(getLayoutInflater(), new IconicsLayoutInflater2(getDelegate()));
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
@@ -112,14 +124,20 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
         PrimaryDrawerItem itemLogout = new PrimaryDrawerItem()
                 .withIdentifier(1)
                 .withSelectable(false)
-                .withIcon(R.drawable.ic_exit_gray_24dp)
+                .withIcon(CommunityMaterial.Icon.cmd_logout_variant)
                 .withName(getString(R.string.str_logout));
 
         PrimaryDrawerItem itemSettings = new PrimaryDrawerItem()
                 .withIdentifier(2)
                 .withSelectable(false)
-                .withIcon(R.drawable.ic_settings_gray_24dp)
+                .withIcon(CommunityMaterial.Icon.cmd_settings)
                 .withName(getString(R.string.str_settings));
+
+        PrimaryDrawerItem itemOpenSource = new PrimaryDrawerItem()
+                .withIdentifier(3)
+                .withSelectable(false)
+                .withIcon(CommunityMaterial.Icon.cmd_github_circle)
+                .withName(getString(R.string.str_open_source));
 
         // Getting User Profile from SharedPreferences
         userProfile = SharedPreferencesUtils.getUserProfile(this.getApplicationContext());
@@ -156,7 +174,8 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
                 .withSavedInstance(savedInstanceState)
                 .addDrawerItems(
                         itemLogout,
-                        itemSettings
+                        itemSettings,
+                        itemOpenSource
                 )
                 .withSelectedItem(-1)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
@@ -219,12 +238,15 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
          *  FAB ACTIONS
          */
 
+        fabMenu.setClosedOnTouchOutside(true);
+
         // Add new Task
         fabTask.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, NewTaskActivity.class);
                 startActivity(intent);
+                fabMenu.close(false);
             }
         });
 
@@ -233,6 +255,7 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
             @Override
             public void onClick(View v) {
 
+                fabMenu.close(false);
             }
         });
 
@@ -241,8 +264,10 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
             @Override
             public void onClick(View v) {
 
+                fabMenu.close(false);
             }
         });
+
     }
 
     private void userLogout() {

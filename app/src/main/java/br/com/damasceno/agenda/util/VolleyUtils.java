@@ -274,4 +274,109 @@ public class VolleyUtils implements Constants {
 
     }
 
+    public static void requestAddNewTask(Context context, String userAccessToken, Task task, final VolleyResponseListener<Task> listener) {
+
+        // Request URL
+        String url = URL_BASE + URL_TASK;
+
+        // Data Params to JSON
+        HashMap<String, String> params = new HashMap<String, String>();
+        params.put("access_token", userAccessToken);
+        params.put("title", task.getTitle());
+        params.put("label", task.getLabel());
+        params.put("text", task.getText());
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, new JSONObject(params),
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                        try {
+
+                            Task taskResponse;
+
+                            // JSON String User
+                            String jsonUser = response.toString();
+
+                            // Mapping the String and filling User object
+                            ObjectMapper mapper = new ObjectMapper();
+                            taskResponse = mapper.readValue(jsonUser, Task.class);
+
+                            listener.onResponse(taskResponse);
+
+                        } catch (Exception e) {
+
+                            e.printStackTrace();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        // Log Volley Error
+                        Log.i(TAG_LOG, "Volley Error: " + error.toString());
+
+                        // Get the Network Response
+                        NetworkResponse networkResponse = error.networkResponse;
+
+                        String statusCode = null;
+
+                        // Verify if there is a status code
+                        if(networkResponse != null) {
+                            statusCode = String.valueOf(networkResponse.statusCode);
+                        }
+
+                        // Return Status Code
+                        listener.onError(statusCode);
+                    }
+                });
+
+        jsonRequest.setTag(TAG_REQUEST_ADD_NEW_TASK);
+        VolleySingleton.getInstance(context).addToRequestQueue(jsonRequest);
+
+    }
+
+    public static void deleteTask(final Context context, final String userAccessToken, String taskId, final VolleyResponseListener<Boolean> listener) {
+
+        // Request URL
+        String url = URL_BASE + URL_TASK + "/" + taskId + "?access_token=" + userAccessToken;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.DELETE, url,
+                new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        Log.i(TAG_LOG, "Task successfully removed from WebServer");
+                        listener.onResponse(true);
+                    }
+                },
+                new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        // Log Volley Error
+                        Log.i(TAG_LOG, "Volley Error: " + error.toString());
+
+                        // Get the Network Response
+                        NetworkResponse networkResponse = error.networkResponse;
+
+                        String statusCode = null;
+
+                        // Verify if there is a status code
+                        if(networkResponse != null) {
+                            statusCode = String.valueOf(networkResponse.statusCode);
+                        }
+
+                        // Return Status Code
+                        listener.onError(statusCode);
+                    }
+                });
+
+        stringRequest.setTag(TAG_REQUEST_REMOVE_TASK);
+        VolleySingleton.getInstance(context).addToRequestQueue(stringRequest);
+
+    }
+
 }

@@ -76,4 +76,9 @@ dependencies {
 
     // Fab
     compile 'com.github.clans:fab:1.6.4'
+
+    // Community Material Design Icons
+    implementation "com.mikepenz:iconics-core:2.9.5@aar"
+    implementation "com.mikepenz:iconics-views:2.9.5@aar"
+    implementation 'com.mikepenz:community-material-typeface:2.0.46.1@aar'
 }

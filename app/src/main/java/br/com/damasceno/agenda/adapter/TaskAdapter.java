@@ -1,6 +1,7 @@
 package br.com.damasceno.agenda.adapter;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.damasceno.agenda.activity.R;
+import br.com.damasceno.agenda.database.AppDatabase;
 import br.com.damasceno.agenda.helper.VolleyResponseListener;
 import br.com.damasceno.agenda.model.Task;
 import br.com.damasceno.agenda.util.SharedPreferencesUtils;
@@ -85,21 +87,17 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         // TODO: save in database
     }
 
-    public void removeTask(int position) {
+    public void removeTask(final int position) {
 
         mTaskList.remove(position);
-
-        // TODO: remove in database
 
         // notify the item removed by position
         notifyItemRemoved(position);
     }
 
-    public void restoreTask(Task task, int position) {
+    public void restoreTask(final Task task, int position) {
 
         mTaskList.add(position, task);
-
-        // TODO: save in database
 
         // notify item added by position
         notifyItemInserted(position);
@@ -117,7 +115,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         @BindView(R.id.text)
         public TextView text;
 
-        @BindView(R.id.label)
+        @BindView(R.id.lay_label)
         public TextView label;
 
         @BindView(R.id.view_foreground)

@@ -19,6 +19,8 @@ public class SharedPreferencesUtils implements Constants {
      */
     public static void storeUserProfile(Context context, String credentialsToken, String userAcessToken, String name, String email, String picture) {
 
+        context.getApplicationContext();
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 
@@ -32,6 +34,9 @@ public class SharedPreferencesUtils implements Constants {
     }
 
     public static HashMap<String, String> getUserProfile(Context context) {
+
+        context.getApplicationContext();
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
 
         HashMap<String, String> userProfile = new HashMap<String, String>();
@@ -45,6 +50,8 @@ public class SharedPreferencesUtils implements Constants {
 
     public static String getCredentials(Context context) {
 
+        context.getApplicationContext();
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String credentials = sharedPreferences.getString(KEY_CREDENTIALS_TOKEN, null);
 
@@ -53,6 +60,8 @@ public class SharedPreferencesUtils implements Constants {
 
     public static String getUserAccessToken(Context context) {
 
+        context = context.getApplicationContext();
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String token = sharedPreferences.getString(KEY_USER_ACCESS_TOKEN, null);
 
@@ -60,6 +69,9 @@ public class SharedPreferencesUtils implements Constants {
     }
 
     public static void removeUserProfile(Context context) {
+
+        context = context.getApplicationContext();
+
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = sharedPreferences.edit();
 

@@ -40,6 +40,16 @@ public class User implements Serializable, Constants {
 
     public User() { }
 
+    public User(@NonNull String id, String name, String email, String password, String picture, String token, String createdAt) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.picture = picture;
+        this.token = token;
+        this.createdAt = createdAt;
+    }
+
     public String getId() {
         return id;
     }

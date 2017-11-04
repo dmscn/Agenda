@@ -3,6 +3,7 @@ package br.com.damasceno.agenda.fragment;
 
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -12,6 +13,7 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,11 +25,13 @@ import java.util.List;
 import br.com.damasceno.agenda.activity.R;
 import br.com.damasceno.agenda.adapter.TaskAdapter;
 import br.com.damasceno.agenda.constant.Constants;
+import br.com.damasceno.agenda.database.AppDatabase;
 import br.com.damasceno.agenda.helper.RecyclerItemTouchHelper;
 import br.com.damasceno.agenda.helper.RecyclerItemTouchHelper.RecyclerItemTouchHelperListener;
 import br.com.damasceno.agenda.helper.VolleyResponseListener;
 import br.com.damasceno.agenda.model.Task;
 import br.com.damasceno.agenda.util.SharedPreferencesUtils;
+import br.com.damasceno.agenda.util.ToastUtils;
 import br.com.damasceno.agenda.util.VolleyUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -82,6 +86,7 @@ public class TaskFragment extends Fragment implements RecyclerItemTouchHelperLis
 
     @Override
     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction, int position) {
+
         if(viewHolder instanceof TaskAdapter.ViewHolder) {
 
             // get the removed item name to display it in snack bar
@@ -92,7 +97,7 @@ public class TaskFragment extends Fragment implements RecyclerItemTouchHelperLis
             final int deletedIndex = viewHolder.getAdapterPosition();
 
             // remove the task from recycler view
-            mAdapter.removeTask(viewHolder.getAdapterPosition());
+            mAdapter.removeTask(deletedIndex);
 
             // showing snack bar with undo option
             Snackbar snackbar = Snackbar
@@ -105,7 +110,46 @@ public class TaskFragment extends Fragment implements RecyclerItemTouchHelperLis
                             mAdapter.restoreTask(deletedTask, deletedIndex);
                         }
                     })
-                    .setActionTextColor(Color.YELLOW);
+                    .setActionTextColor(getResources().getColor(R.color.colorAccent))
+                    .addCallback(new Snackbar.Callback() {
+
+                        // Officially remove the task after snackbar is dismissed
+                        @Override
+                        public void onDismissed(Snackbar transientBottomBar, int event) {
+                            super.onDismissed(transientBottomBar, event);
+
+                            // Remove from the database
+                            AsyncTask.execute(new Runnable() {
+                                @Override
+                                public void run() {
+                                    AppDatabase.getInstance(getActivity()).taskDAO().removeTask(deletedTask);
+                                }
+                            });
+
+                            // Getting User Access Token
+                            String userAccessToken = SharedPreferencesUtils.getUserAccessToken(getActivity());
+
+                            Log.i(TAG_LOG, "user access token from fragment and sharedpreferences  -----------------> " + userAccessToken);
+
+                            Log.i(TAG_LOG, "deleted task id  -----------------> " + deletedTask.getId());
+
+                            // Remove from the Server
+                            VolleyUtils.deleteTask(getActivity(), userAccessToken, deletedTask.getId(), new VolleyResponseListener<Boolean>() {
+
+                                @Override
+                                public void onResponse(@Nullable Boolean response) {
+
+                                }
+
+                                @Override
+                                public void onError(@Nullable String error) {
+
+                                    ToastUtils.toast(getActivity(), getString(R.string.msg_error_removing_task));
+                                }
+
+                            });
+                        }
+                    });
 
             snackbar.show();
         }

@@ -34,6 +34,13 @@ public class Task implements Serializable {
 
     public Task() { }
 
+    public Task(@NonNull String id, String title, String label, String text, String date) {
+        this.id = id;
+        this.title = title;
+        this.label = label;
+        this.text = text;
+        this.date = date;
+    }
 
     public String getId() {
         return id;

@@ -9,10 +9,6 @@ import br.com.damasceno.agenda.fragment.ContactFragment;
 import br.com.damasceno.agenda.fragment.EventFragment;
 import br.com.damasceno.agenda.fragment.TaskFragment;
 
-/**
- * Created by dmscn on 24/10/17.
- */
-
 public class PageAdapter extends FragmentStatePagerAdapter {
 
     int numberOfTabs;

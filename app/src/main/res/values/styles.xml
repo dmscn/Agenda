@@ -125,10 +125,9 @@
     </style>
 
     <!-- ImageView -->
-    <style name="IconLeft">
-        <item name="android:layout_width">wrap_content</item>
+    <style name="IconLeft_24dp">
+        <item name="android:layout_width">24dp</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:layout_marginRight">16dp</item>
-        <item name="android:tint">@color/colorGrayDark</item>
     </style>
 </resources>
