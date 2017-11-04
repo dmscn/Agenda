@@ -33,6 +33,7 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 import com.mikepenz.materialdrawer.util.AbstractDrawerImageLoader;
 import com.mikepenz.materialdrawer.util.DrawerImageLoader;
+import com.mikepenz.materialize.color.Material;
 
 import java.util.HashMap;
 import java.util.List;
@@ -239,6 +240,11 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
          */
 
         fabMenu.setClosedOnTouchOutside(true);
+
+        // Setting Options Icon
+        fabTask.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_clipboard_outline).color(getResources().getColor(R.color.colorWhite)).paddingDp(2));
+        fabEvent.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_calendar).color(getResources().getColor(R.color.colorWhite)).paddingDp(2));
+        fabContact.setImageDrawable(new IconicsDrawable(this, CommunityMaterial.Icon.cmd_account).color(getResources().getColor(R.color.colorWhite)).paddingDp(3));
 
         // Add new Task
         fabTask.setOnClickListener(new View.OnClickListener() {

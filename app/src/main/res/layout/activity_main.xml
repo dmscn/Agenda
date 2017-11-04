@@ -47,8 +47,9 @@
             android:id="@+id/fab_task"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_task_gray_24dp"
-            app:fab_colorNormal="@android:color/darker_gray"
+            app:fab_colorNormal="@color/colorGrayNormal"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_colorRipple="@color/colorAccent"
             app:fab_size="mini"
             app:fab_label="@string/str_task"/>
 
@@ -56,8 +57,9 @@
             android:id="@+id/fab_event"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_event_gray_24dp"
-            app:fab_colorNormal="@android:color/darker_gray"
+            app:fab_colorNormal="@color/colorGrayNormal"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_colorRipple="@color/colorAccent"
             app:fab_size="mini"
             app:fab_label="@string/str_event"/>
 
@@ -65,8 +67,9 @@
             android:id="@+id/fab_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_contact_add_gray_24dp"
-            app:fab_colorNormal="@android:color/darker_gray"
+            app:fab_colorNormal="@color/colorGrayNormal"
+            app:fab_colorPressed="@color/colorAccent"
+            app:fab_colorRipple="@color/colorAccent"
             app:fab_size="mini"
             app:fab_label="@string/str_contact"/>
 
