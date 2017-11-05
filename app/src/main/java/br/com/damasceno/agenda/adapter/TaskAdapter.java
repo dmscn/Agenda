@@ -83,8 +83,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
     public void addTask(Task task) {
 
         mTaskList.add(task);
-
-        // TODO: save in database
     }
 
     public void removeTask(final int position) {
@@ -101,11 +99,6 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
 
         // notify item added by position
         notifyItemInserted(position);
-    }
-
-    public void updateServer() {
-
-        // TODO: call Volley method to send new list of tasks
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

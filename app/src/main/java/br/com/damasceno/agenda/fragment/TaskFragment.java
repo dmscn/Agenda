@@ -118,36 +118,39 @@ public class TaskFragment extends Fragment implements RecyclerItemTouchHelperLis
                         public void onDismissed(Snackbar transientBottomBar, int event) {
                             super.onDismissed(transientBottomBar, event);
 
-                            // Remove from the database
-                            AsyncTask.execute(new Runnable() {
-                                @Override
-                                public void run() {
-                                    AppDatabase.getInstance(getActivity()).taskDAO().removeTask(deletedTask);
-                                }
-                            });
+                            switch (event) {
 
-                            // Getting User Access Token
-                            String userAccessToken = SharedPreferencesUtils.getUserAccessToken(getActivity());
+                                // Only removes after timeout and user didn't clicked UNDO
+                                case Snackbar.Callback.DISMISS_EVENT_TIMEOUT:
 
-                            Log.i(TAG_LOG, "user access token from fragment and sharedpreferences  -----------------> " + userAccessToken);
+                                    // Remove from the database
+                                    AsyncTask.execute(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            AppDatabase.getInstance(getActivity()).taskDAO().removeTask(deletedTask);
+                                        }
+                                    });
 
-                            Log.i(TAG_LOG, "deleted task id  -----------------> " + deletedTask.getId());
+                                    // Getting User Access Token
+                                    String userAccessToken = SharedPreferencesUtils.getUserAccessToken(getActivity());
 
-                            // Remove from the Server
-                            VolleyUtils.deleteTask(getActivity(), userAccessToken, deletedTask.getId(), new VolleyResponseListener<Boolean>() {
+                                    // Remove from the Server
+                                    VolleyUtils.deleteTask(getActivity(), userAccessToken, deletedTask.getId(), new VolleyResponseListener<Boolean>() {
 
-                                @Override
-                                public void onResponse(@Nullable Boolean response) {
+                                        @Override
+                                        public void onResponse(@Nullable Boolean response) {
 
-                                }
+                                        }
 
-                                @Override
-                                public void onError(@Nullable String error) {
+                                        @Override
+                                        public void onError(@Nullable String error) {
 
-                                    ToastUtils.toast(getActivity(), getString(R.string.msg_error_removing_task));
-                                }
+                                            ToastUtils.toast(getActivity(), getString(R.string.msg_error_removing_task));
+                                        }
 
-                            });
+                                    });
+                                    break;
+                            }
                         }
                     });
 

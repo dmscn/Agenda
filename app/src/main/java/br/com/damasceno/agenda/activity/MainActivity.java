@@ -293,7 +293,6 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
                         AsyncTask.execute(new Runnable() {
                             @Override
                             public void run() {
-                                db = AppDatabase.getInstance(MainActivity.this);
                                 db.userDAO().removeUserByEmail(userProfile.get(KEY_USER_EMAIL));
                             }
                         });
@@ -314,7 +313,6 @@ public class MainActivity extends AppCompatActivity implements Constants, TaskFr
                     }
                 });
 
-        // Create and emit Alerts
         alert = builder.create();
         alert.show();
 

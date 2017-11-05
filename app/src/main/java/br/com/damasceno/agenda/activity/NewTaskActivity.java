@@ -65,7 +65,7 @@ public class NewTaskActivity extends AppCompatActivity implements Constants, Dat
 
     Context context = NewTaskActivity.this;
 
-    Date taskDate;
+    Date taskDate = new GregorianCalendar().getTime();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +128,7 @@ public class NewTaskActivity extends AppCompatActivity implements Constants, Dat
                         }
 
                         taskDate = new GregorianCalendar(year, month, dayOfMonth).getTime();
+
                     }
                 }, currentDate.get(Calendar.YEAR), currentDate.get(Calendar.MONTH), currentDate.get(Calendar.DAY_OF_MONTH));
 
@@ -165,7 +166,7 @@ public class NewTaskActivity extends AppCompatActivity implements Constants, Dat
 
     private void performCreateTask() {
 
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_PATTERN);
 
         Task newTask = new Task();
 

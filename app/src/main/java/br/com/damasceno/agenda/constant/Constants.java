@@ -44,4 +44,6 @@ public interface Constants {
             "Home"
     };
 
+    public static final String DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSSZ";
+
 }
