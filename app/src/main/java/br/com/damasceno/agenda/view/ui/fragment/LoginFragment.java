@@ -1,11 +1,11 @@
 package br.com.damasceno.agenda.view.ui.fragment;
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,18 +15,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.mikepenz.community_material_typeface_library.CommunityMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
+import com.android.volley.Response;
 import com.mobsandgeeks.saripaar.annotation.Email;
 import com.mobsandgeeks.saripaar.annotation.NotEmpty;
 import com.mobsandgeeks.saripaar.annotation.Password;
 
-import br.com.damasceno.agenda.view.ui.activity.MainActivity;
-import br.com.damasceno.agenda.view.ui.activity.R;
 import br.com.damasceno.agenda.constant.Constants;
 import br.com.damasceno.agenda.util.ToastUtils;
-import br.com.damasceno.agenda.service.repository.webservice.VolleyResponseListener;
-import br.com.damasceno.agenda.service.repository.webservice.VolleyUtils;
+import br.com.damasceno.agenda.view.ui.activity.MainActivity;
+import br.com.damasceno.agenda.view.ui.activity.R;
+import br.com.damasceno.agenda.viewmodel.LoginViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -54,6 +52,16 @@ public class LoginFragment extends Fragment implements Constants {
     @BindView(R.id.progress_bar)
     ProgressBar mProgressBar;
 
+    LoginViewModel mViewModel;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mViewModel =
+                ViewModelProviders.of(this).get(LoginViewModel.class);
+    }
+
     public LoginFragment() {
         // Required empty public constructor
     }
@@ -65,13 +73,8 @@ public class LoginFragment extends Fragment implements Constants {
         view = inflater.inflate(R.layout.fragment_login, container, false);
         ButterKnife.bind(this, view);
 
-        mEdUsername.setCompoundDrawables( new IconicsDrawable(getActivity(), CommunityMaterial.Icon.cmd_account).color(getResources().getColor(R.color.colorWhite)),null ,null ,null);
-        mEdPassword.setCompoundDrawables( new IconicsDrawable(getActivity(), CommunityMaterial.Icon.cmd_lock),null ,null ,null);
-
         return view;
     }
-
-
 
     @OnClick(R.id.btnLogin)
     public void attemptLogin() {
@@ -82,42 +85,47 @@ public class LoginFragment extends Fragment implements Constants {
 
         hideKeyboard(view);
 
-        // Generating the credentials token
-        String credentialsToken = "Basic " + Base64.encodeToString((mEdUsername.getText().toString() + ":" + mEdPassword.getText().toString()).getBytes(), Base64.DEFAULT);
+        String username = mEdUsername.getText().toString();
+        String password = mEdPassword.getText().toString();
 
-        VolleyUtils.requestAuth(getActivity(), credentialsToken, new VolleyResponseListener() {
-            @Override
-            public void onResponse(@Nullable Object response) {
-
-                ToastUtils.toast(getActivity(), getString(R.string.msg_success));
-
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-                getActivity().finish();
-
-            }
+        mViewModel.login(username, password, new Response.Listener<Integer>() {
 
             @Override
-            public void onError(@Nullable String error) {
+            public void onResponse(Integer response) {
 
-                if(error != null) {
+                switch (response) {
 
-                    if(error.equals("401")) {
+                    case RESPONSE_SUCCESS:
+
+                        ToastUtils.toast(getActivity(), getString(R.string.msg_success));
+
+                        Intent intent = new Intent(getActivity(), MainActivity.class);
+                        startActivity(intent);
+                        getActivity().finish();
+
+                        break;
+
+                    case RESPONSE_INVALID_CREDENTIALS:
+
                         ToastUtils.toast(getActivity(), getString(R.string.msg_username_password_incorrect));
-                    } else {
+
+                        break;
+
+                    default:
                         ToastUtils.toast(getActivity(), getString(R.string.msg_error_timeout));
-                    }
                 }
 
                 // Show Inputs
                 mInputContainer.setVisibility(View.VISIBLE);
                 mProgressBar.setVisibility(View.GONE);
             }
+
         });
     }
 
     // Hides the keyboard
     public void hideKeyboard(View view) {
+
         InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         im.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }

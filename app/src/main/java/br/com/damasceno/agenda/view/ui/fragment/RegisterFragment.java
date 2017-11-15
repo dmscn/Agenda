@@ -2,11 +2,11 @@ package br.com.damasceno.agenda.view.ui.fragment;
 
 
 import android.app.Activity;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,16 +15,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
-import com.mikepenz.community_material_typeface_library.CommunityMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
-
-import br.com.damasceno.agenda.view.ui.activity.MainActivity;
-import br.com.damasceno.agenda.view.ui.activity.R;
 import br.com.damasceno.agenda.constant.Constants;
 import br.com.damasceno.agenda.service.model.User;
 import br.com.damasceno.agenda.util.ToastUtils;
-import br.com.damasceno.agenda.service.repository.webservice.VolleyResponseListener;
-import br.com.damasceno.agenda.service.repository.webservice.VolleyUtils;
+import br.com.damasceno.agenda.view.ui.activity.MainActivity;
+import br.com.damasceno.agenda.view.ui.activity.R;
+import br.com.damasceno.agenda.viewmodel.LoginViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -48,7 +44,16 @@ public class RegisterFragment extends Fragment implements Constants {
     @BindView(R.id.input_container)
     LinearLayout mInputContainer;
 
+    LoginViewModel mViewModel;
     User user;
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        mViewModel =
+                ViewModelProviders.of(this).get(LoginViewModel.class);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -57,10 +62,6 @@ public class RegisterFragment extends Fragment implements Constants {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_register, container, false);
         ButterKnife.bind(this, view);
-
-        mEdName.setCompoundDrawables( new IconicsDrawable(getActivity(), CommunityMaterial.Icon.cmd_account_box_outline).color(getResources().getColor(R.color.colorWhite)),null ,null ,null);
-        mEdEmail.setCompoundDrawables( new IconicsDrawable(getActivity(), CommunityMaterial.Icon.cmd_account).color(getResources().getColor(R.color.colorWhite)),null ,null ,null);
-        mEdPassword.setCompoundDrawables( new IconicsDrawable(getActivity(), CommunityMaterial.Icon.cmd_lock).color(getResources().getColor(R.color.colorWhite)),null ,null ,null);
 
         return view;
     }
@@ -80,45 +81,44 @@ public class RegisterFragment extends Fragment implements Constants {
 
         hideKeyboard(view);
 
-        VolleyUtils.requestRegister(getActivity(), user, new VolleyResponseListener() {
+        mViewModel.register(user, response -> {
+            switch (response) {
 
-            @Override
-            public void onResponse(@Nullable Object response) {
+                case RESPONSE_SUCCESS:
 
-                ToastUtils.toast(getActivity(), getString(R.string.msg_success));
+                    ToastUtils.toast(getActivity(), getString(R.string.msg_success));
 
-                Intent intent = new Intent(getActivity(), MainActivity.class);
-                startActivity(intent);
-                getActivity().finish();
+                    Intent intent = new Intent(getActivity(), MainActivity.class);
+                    startActivity(intent);
+                    getActivity().finish();
+
+                    break;
+
+                case RESPONSE_INVALID_FIELDS:
+
+                    ToastUtils.toast(getActivity(), getString(R.string.msg_error_invalid_fields));
+                    break;
+
+                case RESPONSE_EMAIL_ALREADY_EXISTS:
+
+                    ToastUtils.toast(getActivity(), getString(R.string.msg_error_email_already_exists));
+                    break;
+
+                default:
+
+                    ToastUtils.toast(getActivity(), getString(R.string.msg_error_timeout));
             }
 
-            @Override
-            public void onError(@Nullable String error) {
+            // Showing back the Inputs
+            mInputContainer.setVisibility(View.VISIBLE);
+            mProgressBar.setVisibility(View.GONE);
 
-                switch (error) {
-
-                    case "400":
-                        ToastUtils.toast(getActivity(), getString(R.string.msg_error_invalid_fields));
-                        break;
-
-                    case "409":
-                        ToastUtils.toast(getActivity(), getString(R.string.msg_error_email_already_exists));
-                        break;
-
-                    default:
-                        Log.i(TAG_LOG, "Status Code : " + error);
-                }
-
-                // Showing back the Inputs
-                mInputContainer.setVisibility(View.VISIBLE);
-                mProgressBar.setVisibility(View.GONE);
-
-            }
         });
     }
 
     // Hides the keyboard
     public void hideKeyboard(View view) {
+
         InputMethodManager im = (InputMethodManager) getActivity().getSystemService(Activity.INPUT_METHOD_SERVICE);
         im.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }

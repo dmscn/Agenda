@@ -17,6 +17,12 @@ public interface Constants {
     public static final String TAG_REQUEST_REMOVE_TASK = "REQUEST_REMOVE_TASK";
     public static final String TAG_REQUEST_UPDATE_TASK = "REQUEST_UPDATE_TASK";
 
+    // Web Service
+    public static final int RESPONSE_SUCCESS = 201;
+    public static final int RESPONSE_INVALID_CREDENTIALS = 401;
+    public static final int RESPONSE_INVALID_FIELDS = 400;
+    public static final int RESPONSE_EMAIL_ALREADY_EXISTS = 409;
+
     public static final String WEB_SERVER_MASTER_KEY = "QYiVImowlxDeI8rWwBf7pCZ2j3g72gxk";
     public static final String URL_BASE = "https://myrestfulapi.herokuapp.com";
     public static final String URL_AUTH = "/auth";

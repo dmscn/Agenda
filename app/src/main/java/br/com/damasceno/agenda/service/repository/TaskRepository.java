@@ -97,6 +97,7 @@ public class TaskRepository implements Constants {
                     }
                 },
                 error -> {
+
                     // Log Volley Error
                     Log.i(TAG_LOG, "Volley Error: " + error.toString());
 
