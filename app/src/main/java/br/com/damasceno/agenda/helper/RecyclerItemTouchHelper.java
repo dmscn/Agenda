@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.View;
 
-import br.com.damasceno.agenda.adapter.TaskAdapter;
+import br.com.damasceno.agenda.view.adapter.TaskAdapter;
 
 /**
  * Created by dmscn on 28/10/17.

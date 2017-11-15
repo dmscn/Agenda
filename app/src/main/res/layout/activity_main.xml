@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     xmlns:fab="http://schemas.android.com/tools">
 
+    <!-- HEADER (Toolbar) -->
+
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,7 +18,6 @@
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"
-            android:elevation="4dp"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="@color/colorPrimaryDark"
@@ -25,11 +26,19 @@
 
     </android.support.design.widget.AppBarLayout>
 
+
+
+    <!-- VIEW PAGER (Fragments) -->
+
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+
+
+    <!-- FAB MENU -->
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab_menu"

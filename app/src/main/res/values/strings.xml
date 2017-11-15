@@ -34,7 +34,6 @@
     <string name="str_event">Event</string>
     <string name="str_contact">Contact</string>
     <string name="str_title">Title</string>
-    <string name="str_label">Label</string>
     <string name="str_new_task">New Task</string>
     <string name="str_new_event">New Event</string>
     <string name="str_new_contact">New Contact</string>
@@ -42,9 +41,13 @@
     <string name="str_confirm_password">Confirm Password</string>
     <string name="str_open_source">Open Source</string>
     <string name="str_today">Today</string>
+    <string name="str_none">None</string>
+    <string name="str_parent_task">Parent Task</string>
     <string name="str_or">OR</string>
     <string name="str_regular">Regular</string>
     <string name="str_save">Save</string>
     <string name="hello_blank_fragment">Ops. This layout is under development. It will be available soon</string>
+    <string name="str_due_date">Due Date</string>
+    <string name="str_label">Label</string>
 
 </resources>

@@ -31,7 +31,6 @@
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/ed_username"
                         style="@style/EditText.Light.Email"
-                        android:drawableEnd="@drawable/ic_user_gray_24dp"
                         android:drawableTint="@color/colorWhite"
                         android:ems="10"
                         android:hint="@string/str_username" />
@@ -46,7 +45,6 @@
                     <android.support.design.widget.TextInputEditText
                         android:id="@+id/ed_password"
                         style="@style/EditText.Light.Password"
-                        android:drawableEnd="@drawable/ic_lock_gray_24dp"
                         android:drawableTint="@color/colorWhite"
                         android:ems="10"
                         android:hint="@string/str_password" />

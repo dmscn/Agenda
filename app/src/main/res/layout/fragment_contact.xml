@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="br.com.damasceno.agenda.fragment.ContactFragment">
+    tools:context="br.com.damasceno.agenda.view.ui.fragment.ContactFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

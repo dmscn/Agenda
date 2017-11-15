@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.damasceno.agenda.activity">
+    package="br.com.damasceno.agenda.view.ui.activity">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,7 +12,6 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashTheme">
@@ -27,8 +26,8 @@
             android:theme="@style/WelcomeTheme" />
         <activity android:name=".MainActivity" />
         <activity
-            android:name=".NewTaskActivity"
-            android:windowSoftInputMode="stateVisible"></activity>
+            android:name=".TaskActivity"
+            android:windowSoftInputMode="stateVisible" />
     </application>
 
 </manifest>

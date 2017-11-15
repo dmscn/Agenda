@@ -1,17 +1,10 @@
 package br.com.damasceno.agenda.constant;
 
-import android.content.ClipData;
-
-import com.mikepenz.community_material_typeface_library.CommunityMaterial;
-import com.mikepenz.iconics.IconicsDrawable;
-
-import br.com.damasceno.agenda.util.SharedPreferencesUtils;
-
-/**
- * Created by dmscn on 14/10/17.
- */
-
 public interface Constants {
+
+    // Params
+    public static final String PARAM_TASK = "TASK_POJO";
+
     // Tags
     public static final String TAG_LOG = "TAG_AGENDA";
     public static final String TAG_FRAG_WELCOME = "FRAG_WELCOME";
@@ -22,6 +15,13 @@ public interface Constants {
     public static final String TAG_REQUEST_ALL_TASKS = "REQUEST_ALL_TASKS";
     public static final String TAG_REQUEST_ADD_NEW_TASK = "REQUEST_ADD_NEW_TASK";
     public static final String TAG_REQUEST_REMOVE_TASK = "REQUEST_REMOVE_TASK";
+    public static final String TAG_REQUEST_UPDATE_TASK = "REQUEST_UPDATE_TASK";
+
+    public static final String WEB_SERVER_MASTER_KEY = "QYiVImowlxDeI8rWwBf7pCZ2j3g72gxk";
+    public static final String URL_BASE = "https://myrestfulapi.herokuapp.com";
+    public static final String URL_AUTH = "/auth";
+    public static final String URL_USER = "/users";
+    public static final String URL_TASK = "/tasks";
 
     // Shared Preferences
     public static final String PREF_USER = "PREF_USER";
